@@ -2,14 +2,14 @@ const products = [
     {
         id: 1,
         name: "Lumânare flori",
-        price: 45,
+        price: 20,
         image: "c1.jpg",
         desc: "O lumânare delicată cu motive florale, turnată manual."
     },
     {
         id: 2,
         name: "Odorizant Trandafir",
-        price: 20,
+        price: 15,
         image: "c2.jpg",
         desc: "Parfumul clasic și elegant al trandafirilor englezești."
     },
@@ -68,6 +68,20 @@ const products = [
         price: 5,
         image: "poze/pin_vanilie.png", 
         desc: "Mireasma craciunului, muguri de pin si vanilie."
+    },
+    {
+        id: 12,
+        name: "Clementine dulci",
+        price: 5,
+        image: "poze/clementine.png", 
+        desc: "O aroma inimaginabila de clementine dulci."
+    },
+    {
+        id: 13,
+        name: "Strudel cu mere",
+        price: 5,
+        image: "poze/strudel_mere.png", 
+        desc: "Un miros ce iti aduce aminte de strudelele copilariei"
     },
     {
         id: 11,
