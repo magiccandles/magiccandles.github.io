@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-    <meta name="google-site-verification" content="JquvTxmipnlhSSfDwSYVKFbDTn8nVa7yGfwjpMPnAFM" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Magic Candles & Art Deco | Lumina Magică</title>
@@ -9,9 +8,11 @@
     <style>
         :root {
             --ivory: #F9F7F2;
+            --white: #ffffff;
             --warm-sand: #DBCBB0;
+            --gold-accent: #C5A059;
             --charcoal: #1A1A1A;
-            --transition-smooth: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            --transition-smooth: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         html { scroll-behavior: smooth; }
@@ -22,10 +23,14 @@
             color: var(--charcoal);
             font-family: 'Montserrat', sans-serif;
             overflow-x: hidden;
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
-        h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 500; }
+        h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 600; }
+        
+        /* --- Utilities for Animation --- */
+        .hidden { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .show { opacity: 1; transform: translateY(0); }
 
         /* --- Navigation --- */
         nav {
@@ -37,36 +42,47 @@
             justify-content: space-between;
             align-items: center;
             z-index: 2000; 
-            background: rgba(249, 247, 242, 0.95);
-            backdrop-filter: blur(10px);
-            height: 70px;
+            background: rgba(249, 247, 242, 0.90);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            height: 80px;
+            transition: top 0.3s;
         }
 
         .logo { 
-            font-size: 1rem; 
+            font-size: 1.1rem; 
             text-transform: uppercase; 
-            letter-spacing: 1px; 
+            letter-spacing: 2px; 
             font-weight: 600; 
             cursor: pointer;
+            color: var(--charcoal);
         }
 
         .hamburger {
             cursor: pointer;
             z-index: 2100;
+            width: 30px;
+            height: 20px;
+            position: relative;
         }
 
         .hamburger span {
             display: block;
             height: 2px;
-            width: 25px;
+            width: 100%;
             background-color: var(--charcoal);
-            margin: 5px 0;
+            position: absolute;
             transition: var(--transition-smooth);
         }
+
+        .hamburger span:nth-child(1) { top: 0; }
+        .hamburger span:nth-child(2) { top: 9px; }
+        .hamburger span:nth-child(3) { top: 18px; }
         
-        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        /* Hamburger Active State */
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg); top: 9px; }
         .hamburger.active span:nth-child(2) { opacity: 0; }
-        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg); top: 9px; }
 
         /* --- Menu Overlay --- */
         .menu-overlay {
@@ -77,28 +93,37 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            clip-path: circle(0% at 90% 5%);
+            /* Circle reveal effect */
+            clip-path: circle(0% at 92% 5%);
             transition: clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+            pointer-events: none;
         }
 
-        .menu-overlay.active { clip-path: circle(150% at 90% 5%); }
+        .menu-overlay.active { 
+            clip-path: circle(150% at 90% 5%); 
+            pointer-events: all;
+        }
+
+        .menu-links { text-align: center; }
 
         .menu-links a {
             display: block;
             font-family: 'Cormorant Garamond', serif;
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: var(--charcoal);
             text-decoration: none;
-            margin: 1.5rem 0;
+            margin: 1rem 0;
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(30px);
+            transition: var(--transition-smooth);
         }
 
-        .menu-overlay.active .menu-links a { 
-            opacity: 1; 
-            transform: translateY(0); 
-            transition: 0.5s ease forwards;
-        }
+        .menu-links a:hover { color: var(--gold-accent); font-style: italic; }
+
+        /* Staggered Animation for Menu Items */
+        .menu-overlay.active .menu-links a:nth-child(1) { transition-delay: 0.1s; opacity: 1; transform: translateY(0); }
+        .menu-overlay.active .menu-links a:nth-child(2) { transition-delay: 0.2s; opacity: 1; transform: translateY(0); }
+        .menu-overlay.active .menu-links a:nth-child(3) { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
 
         /* --- Hero --- */
         .hero {
@@ -107,140 +132,158 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('h1.jpg') center/cover;
+            /* Using a dark gradient overlay for text readability */
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1602523753239-011406830520?q=80&w=2070&auto=format&fit=crop') center/cover;
             color: white;
             text-align: center;
             padding: 0 20px;
         }
 
-        .hero h1 { font-size: 2.8rem; margin-bottom: 1rem; font-style: italic; }
+        .hero h1 { 
+            font-size: 3.5rem; 
+            margin-bottom: 1.5rem; 
+            font-style: italic; 
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            animation: fadeUp 1s ease-out;
+        }
 
         .btn-primary {
-            padding: 1rem 2.5rem;
+            padding: 1rem 3rem;
             background: var(--charcoal);
             color: white;
             text-transform: uppercase;
             letter-spacing: 2px;
-            font-size: 0.75rem;
-            border: none;
+            font-size: 0.8rem;
+            border: 1px solid var(--charcoal);
             cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
+            transition: all 0.3s ease;
+            animation: fadeUp 1.2s ease-out;
         }
 
-        /* --- Grids --- */
-        .section-padding { padding: 60px 5%; max-width: 1200px; margin: 0 auto; }
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--charcoal);
+            border-color: var(--charcoal);
+        }
+
+        .hero .btn-primary:hover { color: white; border-color: white; }
+
+        /* --- Layout --- */
+        .section-padding { padding: 100px 5%; max-width: 1400px; margin: 0 auto; }
         
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 { font-size: 2.5rem; margin-bottom: 10px; }
+        .section-header p { font-size: 1rem; color: #666; letter-spacing: 1px; text-transform: uppercase; }
+
         .grid {
             display: grid;
-            gap: 20px;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         }
 
+        /* --- Product Card --- */
         .product-card {
-            background: white;
-            padding: 10px;
+            background: transparent;
             text-align: center;
             cursor: pointer;
+            transition: transform 0.3s ease;
         }
+
+        .product-card:hover { transform: translateY(-10px); }
 
         .img-box {
-            height: 350px;
-            margin-bottom: 15px;
+            height: 400px;
+            width: 100%;
+            margin-bottom: 20px;
             background: #fff;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
-        .img-box img { width: 100%; height: 100%; object-fit: contain; }
+        .img-box img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            transition: transform 0.6s ease;
+        }
+        
+        .product-card:hover .img-box img { transform: scale(1.05); }
 
-        /* --- Product Page --- */
-        #product-page, #all-products-view { padding-top: 90px; min-height: 100vh; }
+        .product-card h3 { font-size: 1.5rem; margin-bottom: 5px; color: var(--charcoal); }
+        .product-card p { color: var(--gold-accent); font-weight: 500; font-size: 1.1rem; }
 
+        /* --- Footer --- */
+        footer { 
+            background: var(--charcoal); 
+            color: var(--ivory); 
+            padding: 80px 5% 40px; 
+            text-align: center; 
+        }
+        
+        .footer-content { max-width: 600px; margin: 0 auto; }
+        .footer-links { margin: 30px 0; display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+        .footer-links a { color: var(--warm-sand); text-decoration: none; font-size: 0.9rem; letter-spacing: 1px; transition: color 0.3s; }
+        .footer-links a:hover { color: white; }
+        
+        footer iframe { 
+            width: 100%; 
+            height: 250px; 
+            border: 0; 
+            filter: grayscale(100%) invert(90%); 
+            margin: 30px 0; 
+            opacity: 0.8;
+        }
+
+        /* --- Product Page Specifics --- */
+        #product-page, #all-products-view { padding-top: 100px; min-height: 100vh; }
+        
         .pdp-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 2rem;
+            gap: 3rem;
         }
 
-        @media (min-width: 1024px) {
-            .pdp-grid { grid-template-columns: 1.2fr 0.8fr; gap: 4rem; }
+        @media (min-width: 900px) {
+            .pdp-grid { grid-template-columns: 1.2fr 0.8fr; gap: 5rem; align-items: start; }
             .hero h1 { font-size: 5rem; }
         }
 
+        .pdp-info h1 { font-size: 3rem; margin-bottom: 10px; line-height: 1.1; }
+        .price { font-size: 1.8rem; color: var(--gold-accent); margin-bottom: 2rem; display: block; font-family: 'Cormorant Garamond', serif;}
+
+        /* --- Page State Management --- */
+        .page-section { display: none; opacity: 0; }
+        .active-page { display: block; animation: fadeInPage 0.6s forwards; }
+
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* --- Slider --- */
-        .slider-container {
-            position: relative;
-            overflow: hidden;
-            touch-action: pan-y;
-            background: #fff;
+        .slider-container { position: relative; overflow: hidden; background: white; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .slider-wrapper { display: flex; transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1); }
+        .slider-wrapper img { min-width: 100%; height: auto; max-height: 70vh; object-fit: contain; display: block;}
+        
+        .slider-nav {
+            position: absolute; bottom: 20px; left: 0; right: 0; 
+            display: flex; justify-content: center; gap: 10px;
         }
+        .dot { width: 10px; height: 10px; background: rgba(0,0,0,0.2); border-radius: 50%; cursor: pointer; transition: 0.3s; }
+        .dot.active { background: var(--charcoal); transform: scale(1.2); }
 
-        .slider-wrapper {
-            display: flex;
-            transition: transform 0.4s ease-out;
-            width: 100%;
-        }
-
-        .slider-wrapper img {
-            min-width: 100%;
-            height: auto;
-            max-height: 65vh;
-            object-fit: contain;
-        }
-
-        .slider-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255,255,255,0.7);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            z-index: 5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-
-        .slider-btn.prev { left: 10px; }
-        .slider-btn.next { right: 10px; }
-
-        .slider-dots {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            padding: 15px 0;
-        }
-
-        .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #ccc;
-        }
-
-        .dot.active { background: var(--charcoal); width: 18px; border-radius: 4px; }
-
-        .pdp-info h1 { font-size: 2.2rem; margin-bottom: 10px; }
-        .price { font-size: 1.4rem; color: #8b7355; margin-bottom: 1.5rem; display: block;}
-
-        /* --- Page Switch --- */
-        .active-page { display: block !important; animation: fadeIn 0.4s ease; }
-        #main-site, #all-products-view, #product-page { display: none; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* --- Footer --- */
-        footer { background: var(--charcoal); color: white; padding: 50px 5%; text-align: center; }
-        .footer-links { margin: 20px 0; display: flex; flex-direction: column; gap: 10px; }
-        .footer-links a { color: var(--warm-sand); text-decoration: none; font-size: 0.9rem; }
-        footer iframe { width: 100%; height: 300px; margin-top: 25px; border: 0; }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo" onclick="switchPage('main-site')">Magic Candles & Art Deco</div>
+        <div class="logo" onclick="switchPage('main-site')">Lumina Magică</div>
         <div class="hamburger" id="nav-toggle">
             <span></span><span></span><span></span>
         </div>
@@ -248,104 +291,166 @@
 
     <div class="menu-overlay" id="menu">
         <div class="menu-links">
-            <a href="#" onclick="closeMenu(); switchPage('main-site');">Acasă</a>
-            <a href="#" onclick="closeMenu(); switchPage('all-products-view');">Colecție</a>
-            <a href="#" onclick="closeMenu(); switchPage('main-site');">Contact</a>
+            <a href="#" onclick="handleMenuClick('main-site')">Acasă</a>
+            <a href="#" onclick="handleMenuClick('all-products-view')">Colecție</a>
+            <a href="#footer-contact" onclick="handleMenuClick('footer')">Contact</a>
         </div>
     </div>
 
-    <div id="main-site" class="active-page">
+    <div id="main-site" class="page-section active-page">
         <section class="hero">
             <h1>Artă și Lumină</h1>
             <button class="btn-primary" onclick="switchPage('all-products-view')" style="background:transparent; border: 1px solid white;">Vezi Colecția</button>
         </section>
 
         <section class="section-padding">
-            <h2 style="text-align: center; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 2px;">Produse Recomandate</h2>
+            <div class="section-header hidden">
+                <h2>Produse Recomandate</h2>
+                <p>Descoperă noile creații</p>
+            </div>
             <div class="grid" id="home-grid"></div>
             
-            <div style="text-align: center; margin-top: 40px;">
-                <button class="btn-primary" onclick="switchPage('all-products-view')">Mai multe</button>
+            <div style="text-align: center; margin-top: 60px;" class="hidden">
+                <button class="btn-primary" onclick="switchPage('all-products-view')">Vezi Tot Catalogul</button>
             </div>
         </section>
         
         <footer id="footer-contact">
-            <p style="text-transform: uppercase; letter-spacing: 2px;">Contactează-ne</p>
-            <div class="footer-links">
-                <a href="https://wa.me/407XXXXXXXX" target="_blank">WhatsApp: +40 7XX XXX XXX</a>
-                <a href="mailto:cristina_b_cretu@yahoo.com">Email</a>
-                <a href="https://www.tiktok.com/@magic_light_behind_tears" target="_blank">TikTok</a>
+            <div class="footer-content hidden">
+                <h2 style="font-family:'Cormorant Garamond'; font-size: 2rem; margin-bottom: 20px;">Contactează-ne</h2>
+                <p style="opacity: 0.7;">Pentru comenzi personalizate și detalii</p>
+                <div class="footer-links">
+                    <a href="#">WhatsApp: +40 7XX XXX XXX</a>
+                    <a href="mailto:contact@email.com">Email</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">TikTok</a>
+                </div>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2848.8444388087937!2d26.10253831552336!3d44.43614147910199!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b1ff4770adb5b7%3A0x58147f39579fe6fa!2sBucharest%2C%20Romania!5e0!3m2!1sen!2s!4v1645524671404!5m2!1sen!2s" allowfullscreen="" loading="lazy"></iframe>
+                <p style="margin-top: 40px; opacity: 0.4; font-size: 0.7rem;">© 2026 MAGIC CANDLES & ART DECO</p>
             </div>
-            <iframe src="https://maps.google.com/?cid=2763474062391980801&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"></iframe>
-            <p style="margin-top: 40px; opacity: 0.4; font-size: 0.7rem;">© 2026 MAGIC CANDLES & ART DECO</p>
         </footer>
     </div>
 
-    <div id="all-products-view">
+    <div id="all-products-view" class="page-section">
         <div class="section-padding">
-            <p onclick="switchPage('main-site')" style="cursor:pointer; margin-bottom: 25px; font-size: 0.8rem; letter-spacing: 1px;">← ÎNAPOI LA ACASĂ</p>
-            <h2 style="margin-bottom: 40px; text-transform: uppercase;">Întreaga Colecție</h2>
+            <p onclick="switchPage('main-site')" style="cursor:pointer; margin-bottom: 25px; font-size: 0.8rem; letter-spacing: 1px; opacity: 0.6;">← ÎNAPOI LA ACASĂ</p>
+            <div class="section-header">
+                <h2>Întreaga Colecție</h2>
+            </div>
             <div class="grid" id="full-grid"></div>
         </div>
+        <div style="text-align: center; padding: 50px; opacity: 0.5; font-size: 0.8rem;">© 2026 Lumina Magică</div>
     </div>
 
-    <div id="product-page">
+    <div id="product-page" class="page-section">
         <div class="section-padding">
-            <p onclick="window.history.back()" style="cursor:pointer; margin-bottom: 25px; font-size: 0.8rem; letter-spacing: 1px;">← ÎNAPOI</p>
+            <p onclick="window.history.back()" style="cursor:pointer; margin-bottom: 25px; font-size: 0.8rem; letter-spacing: 1px; opacity: 0.6;">← ÎNAPOI</p>
             <div class="pdp-grid">
                 <div class="pdp-visual">
                     <div class="slider-container" id="slider-container">
-                        <button class="slider-btn prev" onclick="moveSlide(-1)">❮</button>
-                        <button class="slider-btn next" onclick="moveSlide(1)">❯</button>
                         <div class="slider-wrapper" id="slider-wrapper"></div>
+                        <div class="slider-nav" id="slider-dots"></div>
                     </div>
-                    <div class="slider-dots" id="slider-dots"></div>
                 </div>
                 <div class="pdp-info">
-                    <h1 id="pdp-name"></h1>
-                    <span class="price" id="pdp-price"></span>
-                    <p id="pdp-desc" style="color: #555; font-size: 1.1rem;"></p>
+                    <h1 id="pdp-name">Nume Produs</h1>
+                    <span class="price" id="pdp-price">100 RON</span>
+                    <hr style="border: 0; border-top: 1px solid #ddd; margin: 20px 0;">
+                    <p id="pdp-desc" style="color: #555; font-size: 1.1rem; margin-bottom: 30px;"></p>
+                    <a id="wa-link" href="#" target="_blank" class="btn-primary" style="text-decoration: none; display: inline-block;">Comandă pe WhatsApp</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="products.js"></script>
     <script>
-        let currentSlideIndex = 0;
-        let touchStartX = 0;
-        let touchEndX = 0;
+        // --- 1. MOCK DATA (Replaces external products.js) ---
+        // You can edit the text/images here.
+        const products = [
+            { id: 1, name: "Lumânare Sculpturală", price: 85, image: "https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=800&q=80", image2: "https://images.unsplash.com/photo-1602523753239-011406830520?auto=format&fit=crop&w=800&q=80", desc: "O lumânare realizată manual din ceară de soia naturală, perfectă pentru decor." },
+            { id: 2, name: "Vază Art Deco", price: 120, image: "https://images.unsplash.com/photo-1581783342308-f792ca11df53?auto=format&fit=crop&w=800&q=80", desc: "Design minimalist cu accente aurii, ideală pentru aranjamente florale uscate." },
+            { id: 3, name: "Set Aromaterapie", price: 150, image: "https://images.unsplash.com/photo-1572726729207-a78d6feb18d7?auto=format&fit=crop&w=800&q=80", desc: "Set complet pentru relaxare, include lumânare parfumată și bețișoare." },
+            { id: 4, name: "Sfeșnic Vintage", price: 65, image: "https://images.unsplash.com/photo-1610486665780-e37456d95955?auto=format&fit=crop&w=800&q=80", desc: "Sfeșnic elegant din ceramică, finisat manual." },
+            { id: 5, name: "Bol Decorativ", price: 95, image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80", desc: "Bol texturat pentru bijuterii sau chei." },
+            { id: 6, name: "Lumină Ambientală", price: 200, image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=800&q=80", desc: "Lampă ambientală cu lumină caldă, design modern." }
+        ];
+
+        // --- 2. APP LOGIC ---
 
         function init() {
-            if (typeof products === 'undefined') return;
             const hGrid = document.getElementById('home-grid');
             const fGrid = document.getElementById('full-grid');
             
-            // Render Full Grid
-            fGrid.innerHTML = products.map(p => createCard(p)).join('');
-            
-            // Render first 3 for Home Grid
-            hGrid.innerHTML = products.slice(0, 3).map(p => createCard(p)).join('');
+            // Render Grids
+            if(fGrid) fGrid.innerHTML = products.map(p => createCard(p)).join('');
+            if(hGrid) hGrid.innerHTML = products.slice(0, 3).map(p => createCard(p)).join('');
+
+            setupObserver();
         }
 
         function createCard(p) {
             return `
-                <div class="product-card" onclick="viewProduct(${p.id})">
+                <div class="product-card hidden" onclick="viewProduct(${p.id})">
                     <div class="img-box"><img src="${p.image}" alt="${p.name}"></div>
                     <h3>${p.name}</h3>
-                    <p style="color: #8b7355; font-weight: 500;">${p.price}.00 RON</p>
+                    <p>${p.price}.00 RON</p>
                 </div>
             `;
         }
 
+        // --- 3. NAVIGATION & MENU ---
+
+        const navToggle = document.getElementById('nav-toggle');
+        const menuOverlay = document.getElementById('menu');
+
+        // Toggle Menu
+        navToggle.onclick = () => {
+            navToggle.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+        };
+
+        // Handle Menu Link Click
+        function handleMenuClick(target) {
+            // 1. Close Menu
+            navToggle.classList.remove('active');
+            menuOverlay.classList.remove('active');
+
+            // 2. Wait for menu animation to finish slightly, then switch
+            if (target === 'footer') {
+                switchPage('main-site');
+                setTimeout(() => {
+                    document.getElementById('footer-contact').scrollIntoView({behavior: 'smooth'});
+                }, 300);
+            } else {
+                setTimeout(() => switchPage(target), 300);
+            }
+        }
+
+        // Switch Page Functionality
         function switchPage(pageId, push = true) {
-            document.querySelectorAll('#main-site, #all-products-view, #product-page').forEach(p => p.classList.remove('active-page'));
-            document.getElementById(pageId).classList.add('active-page');
             window.scrollTo(0,0);
+            
+            // Hide all pages
+            document.querySelectorAll('.page-section').forEach(p => {
+                p.classList.remove('active-page');
+            });
+
+            // Show target page
+            const target = document.getElementById(pageId);
+            if(target) {
+                target.classList.add('active-page');
+                // Re-trigger scroll animations for the new page
+                setTimeout(setupObserver, 100); 
+            }
+
             if(push) history.pushState({page: pageId}, "", "");
         }
 
         window.onpopstate = (e) => switchPage(e.state?.page || 'main-site', false);
+
+        // --- 4. PRODUCT DETAILS & SLIDER ---
+
+        let currentSlideIndex = 0;
 
         function viewProduct(id) {
             const p = products.find(prod => prod.id === id);
@@ -354,53 +459,63 @@
             document.getElementById('pdp-name').innerText = p.name;
             document.getElementById('pdp-price').innerText = p.price + '.00 RON';
             document.getElementById('pdp-desc').innerText = p.desc;
+            
+            // Generate WhatsApp Link
+            const message = `Buna! Sunt interesat de produsul: ${p.name}`;
+            document.getElementById('wa-link').href = `https://wa.me/40700000000?text=${encodeURIComponent(message)}`;
 
+            // Setup Slider
             const wrapper = document.getElementById('slider-wrapper');
-            const dots = document.getElementById('slider-dots');
+            const dotsContainer = document.getElementById('slider-dots');
             
-            // Setup Slider Images
-            let imgHtml = `<img src="${p.image}">`;
-            if (p.image2) imgHtml += `<img src="${p.image2}">`;
-            wrapper.innerHTML = imgHtml;
+            let images = [p.image];
+            if (p.image2) images.push(p.image2);
+
+            wrapper.innerHTML = images.map(src => `<img src="${src}">`).join('');
             
-            // Setup Dots & Buttons
-            dots.innerHTML = p.image2 ? '<div class="dot active"></div><div class="dot"></div>' : '';
-            document.querySelectorAll('.slider-btn').forEach(b => b.style.display = p.image2 ? 'flex' : 'none');
+            // Create dots if more than 1 image
+            if (images.length > 1) {
+                dotsContainer.innerHTML = images.map((_, i) => 
+                    `<div class="dot ${i===0?'active':''}" onclick="setSlide(${i})"></div>`
+                ).join('');
+            } else {
+                dotsContainer.innerHTML = '';
+            }
             
             currentSlideIndex = 0;
             updateSlider();
             switchPage('product-page');
         }
 
-        function moveSlide(n) {
-            const imgs = document.querySelectorAll('#slider-wrapper img');
-            if (imgs.length < 2) return;
-            currentSlideIndex = (currentSlideIndex + n + imgs.length) % imgs.length;
+        function setSlide(index) {
+            currentSlideIndex = index;
             updateSlider();
         }
 
         function updateSlider() {
             const wrapper = document.getElementById('slider-wrapper');
             wrapper.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
-            document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === currentSlideIndex));
+            
+            const dots = document.querySelectorAll('.dot');
+            dots.forEach((d, i) => d.classList.toggle('active', i === currentSlideIndex));
         }
 
-        // Swipe Logic
-        const sliderContainer = document.getElementById('slider-container');
-        sliderContainer.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
-        sliderContainer.addEventListener('touchend', e => {
-            touchEndX = e.changedTouches[0].screenX;
-            if (touchStartX - touchEndX > 50) moveSlide(1);
-            if (touchEndX - touchStartX > 50) moveSlide(-1);
-        });
+        // --- 5. SCROLL ANIMATIONS (Intersection Observer) ---
+        function setupObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                    }
+                });
+            }, { threshold: 0.1 });
 
-        // Hamburger Menu
-        const navToggle = document.getElementById('nav-toggle');
-        const menu = document.getElementById('menu');
-        navToggle.onclick = () => { navToggle.classList.toggle('active'); menu.classList.toggle('active'); };
-        function closeMenu() { navToggle.classList.remove('active'); menu.classList.remove('active'); }
+            document.querySelectorAll('.hidden').forEach((el) => observer.observe(el));
+        }
 
+        // Initialize app
         init();
+
     </script>
 </body>
 </html>
