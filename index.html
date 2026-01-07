@@ -180,7 +180,7 @@
             transition: 1.2s ease; 
         }
         
-        /* --- Product Detail Page (PDP) --- */
+        /* --- SLIDER STYLES --- */
         .pdp-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -188,38 +188,64 @@
         }
         @media (min-width: 1024px) { .pdp-grid { grid-template-columns: 1fr 1fr; } }
 
-        .pdp-visual {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .pdp-visual img { 
-            width: 100%; 
-            height: auto; 
-            max-height: 70vh;
-            object-fit: contain;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
-        }
-
-        /* Gallery Thumbnails Style */
-        .secondary-images {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .thumb-img {
-            width: 80px;
-            height: 80px;
-            object-fit: contain;
-            border: 1px solid #eee;
-            cursor: pointer;
-            transition: 0.3s;
+        .slider-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             background: #fff;
         }
 
-        .thumb-img:hover { border-color: var(--charcoal); }
+        .slider-wrapper {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            width: 100%;
+        }
+
+        .slider-wrapper img {
+            min-width: 100%;
+            height: auto;
+            max-height: 75vh;
+            object-fit: contain;
+        }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.8);
+            border: none;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 1.2rem;
+            display: none; /* Only show if image2 exists */
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .slider-btn.prev { left: 10px; }
+        .slider-btn.next { right: 10px; }
+
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 15px 0;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .dot.active { background: var(--charcoal); width: 20px; border-radius: 4px; }
         
         .back-link { cursor: pointer; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; margin-bottom: 2rem; display: inline-block; color: #777; }
 
@@ -297,9 +323,16 @@
         <div class="section-padding">
             <div class="back-link" onclick="switchPage('main-site')">← Înapoi</div>
             <div class="pdp-grid">
-                <div class="pdp-visual" id="pdp-visual-container">
-                    <img id="pdp-img" src="" alt="Imagine Produs">
+                <div class="pdp-visual">
+                    <div class="slider-container">
+                        <button class="slider-btn prev" onclick="moveSlide(-1)">&#10094;</button>
+                        <button class="slider-btn next" onclick="moveSlide(1)">&#10095;</button>
+                        <div class="slider-wrapper" id="slider-wrapper">
+                            </div>
                     </div>
+                    <div class="slider-dots" id="slider-dots">
+                        </div>
+                </div>
                 <div class="pdp-info">
                     <h1 id="pdp-name" style="font-size: 3.5rem; margin-bottom: 1rem;"></h1>
                     <p id="pdp-price" style="font-size: 1.5rem; margin-bottom: 2rem; color: #8b7355;"></p>
@@ -312,6 +345,7 @@
     <script src="products.js"></script>
 
     <script>
+        let currentSlideIndex = 0;
         const homeGrid = document.getElementById('home-grid');
         const fullGrid = document.getElementById('full-grid');
 
@@ -352,44 +386,65 @@
             document.getElementById('pdp-price').innerText = p.price + '.00 RON';
             document.getElementById('pdp-desc').innerText = p.desc;
             
-            const mainImg = document.getElementById('pdp-img');
-            mainImg.src = p.image;
-
-            // --- GALLERY LOGIC ---
-            const visualContainer = document.getElementById('pdp-visual-container');
+            // Setup Slider
+            const wrapper = document.getElementById('slider-wrapper');
+            const dotContainer = document.getElementById('slider-dots');
+            const btns = document.querySelectorAll('.slider-btn');
             
-            // Remove old thumbnails
-            const oldThumbs = document.querySelector('.secondary-images');
-            if (oldThumbs) oldThumbs.remove();
+            wrapper.innerHTML = "";
+            dotContainer.innerHTML = "";
+            currentSlideIndex = 0;
+            wrapper.style.transform = "translateX(0)";
 
-            // Create new thumbnails if image2 exists
-            const thumbContainer = document.createElement('div');
-            thumbContainer.className = 'secondary-images';
+            const images = [p.image];
+            if (p.image2) images.push(p.image2);
 
-            // Add first image to thumbs
-            const imgList = [p.image];
-            if (p.image2) imgList.push(p.image2);
+            images.forEach((imgSrc, index) => {
+                const img = document.createElement('img');
+                img.src = imgSrc;
+                wrapper.appendChild(img);
 
-            imgList.forEach(src => {
-                const thumb = document.createElement('img');
-                thumb.src = src;
-                thumb.className = 'thumb-img';
-                thumb.onclick = () => { mainImg.src = src; };
-                thumbContainer.appendChild(thumb);
+                const dot = document.createElement('div');
+                dot.className = index === 0 ? 'dot active' : 'dot';
+                dot.onclick = () => setSlide(index);
+                dotContainer.appendChild(dot);
             });
 
-            visualContainer.appendChild(thumbContainer);
+            // Show/Hide slider buttons
+            btns.forEach(btn => btn.style.display = images.length > 1 ? 'flex' : 'none');
+            dotContainer.style.display = images.length > 1 ? 'flex' : 'none';
+
             switchPage('product-page');
         }
 
+        function moveSlide(step) {
+            const wrapper = document.getElementById('slider-wrapper');
+            const images = wrapper.querySelectorAll('img');
+            currentSlideIndex = (currentSlideIndex + step + images.length) % images.length;
+            updateSliderPosition();
+        }
+
+        function setSlide(index) {
+            currentSlideIndex = index;
+            updateSliderPosition();
+        }
+
+        function updateSliderPosition() {
+            const wrapper = document.getElementById('slider-wrapper');
+            const dots = document.querySelectorAll('.dot');
+            wrapper.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+            dots.forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === currentSlideIndex);
+            });
+        }
+
+        // --- MENU ---
         const navToggle = document.getElementById('nav-toggle');
         const menu = document.getElementById('menu');
-
         navToggle.addEventListener('click', () => {
             menu.classList.toggle('active');
             navToggle.classList.toggle('active');
         });
-
         function closeMenu() {
             menu.classList.remove('active');
             navToggle.classList.remove('active');
@@ -398,8 +453,7 @@
         window.addEventListener('scroll', () => {
             document.querySelectorAll('.reveal').forEach(reveal => {
                 const windowHeight = window.innerHeight;
-                const revealTop = reveal.getBoundingClientRect().top;
-                if (revealTop < windowHeight - 100) reveal.classList.add('active');
+                if (reveal.getBoundingClientRect().top < windowHeight - 100) reveal.classList.add('active');
             });
         });
         window.dispatchEvent(new Event('scroll'));
