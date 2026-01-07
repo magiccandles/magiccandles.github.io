@@ -24,7 +24,7 @@ const products = [
         id: 4,
         name: "Migdale & Ciocolată albă",
         price: 5,
-        image: "poze/migdale_cioco_alba.png", 
+        image: "poze/migdale_choco_alba.png", 
         desc: "Relaxare totală cu note profunde de migdale și ciocolată albă."
     },
     {
