@@ -22,16 +22,23 @@ const products = [
     },
     {
         id: 4,
-        name: "Lavandă & Mosc",
-        price: 35,
-        image: "c1.jpg", 
-        desc: "Relaxare totală cu note profunde de mosc."
+        name: "Migdale & Ciocolată albă",
+        price: 5,
+        image: "poze/migdale_cioco_alba.png", 
+        desc: "Relaxare totală cu note profunde de migdale și ciocolată albă."
     },
     {
         id: 5,
-        name: "Vanilie",
-        price: 30,
-        image: "c2.jpg",
+        name: "Vanilie & Lămâie",
+        price: 5,
+        image: "poze/vanilie_lamaie.png", 
+        desc: "Ceară parfumată cu arome de vanilie și lămâie."
+    },
+    {
+        id: 100,
+        name: "Ciocolată & Portocale",
+        price: 5,
+        image: "poze/cioco.porto.png",
         desc: "Dulce și primitoare."
     }
 ];
