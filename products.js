@@ -42,6 +42,13 @@ const products = [
         desc: "Ceară parfumată cu aromă de portocală coaptă."
     },
     {
+        id: 7,
+        name: "Iarna ca-n povești",
+        price: 5,
+        image: "poze/iarna.png", 
+        desc: "Ceară parfumată cu arome de vanilie și lămâie."
+    },
+    {
         id: 100,
         name: "Ciocolată & Portocale",
         price: 5,
