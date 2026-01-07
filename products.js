@@ -70,7 +70,7 @@ const products = [
         desc: "Mireasma craciunului, muguri de pin si vanilie."
     },
     {
-        id: 100,
+        id: 123,
         name: "Ciocolată & Portocale",
         price: 5,
         image: "poze/cioco_porto.png",
