@@ -154,7 +154,7 @@
             color: var(--charcoal);
         }
 
-        /* --- Product Page Styling (The Fix) --- */
+        /* --- Product Page Styling --- */
         #product-page .section-padding {
             padding-top: 100px;
             padding-bottom: 50px;
@@ -179,18 +179,19 @@
             flex-direction: column;
             align-items: center;
             position: relative;
-            background: #fff;
+            background: #fff; /* White background behind image */
             border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08); /* Nice shadow */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             overflow: hidden;
         }
 
         .slider-container {
             width: 100%;
             position: relative;
-            overflow: hidden; /* Crucial: Prevents overflow */
+            overflow: hidden;
             touch-action: pan-y;
-            aspect-ratio: 1 / 1.1; /* Keeps shape consistent */
+            aspect-ratio: 1 / 1.1; 
+            background: #fff; /* Ensures white background if image doesn't fit perfectly */
         }
 
         .slider-wrapper {
@@ -199,13 +200,14 @@
             transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* FIX: Forces image to fit exactly 100% of container */
+        /* FIX: Changed object-fit to CONTAIN so images fit inside without being cropped */
         .slider-wrapper img {
             flex: 0 0 100%;
             width: 100%;
             height: 100%;
-            object-fit: cover; 
+            object-fit: contain; /* This makes the image fit inside the box */
             display: block;
+            padding: 10px; /* Adds a little breathing room */
         }
 
         .slider-btn {
@@ -247,12 +249,12 @@
             width: 8px; 
             height: 8px; 
             border-radius: 50%; 
-            background: rgba(255,255,255,0.5); 
+            background: rgba(0,0,0,0.2); /* Darker dots so they are visible on white */
             backdrop-filter: blur(2px);
             transition: 0.3s; 
-            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            box-shadow: 0 1px 3px rgba(255,255,255,0.5);
         }
-        .dot.active { background: #fff; transform: scale(1.3); }
+        .dot.active { background: var(--gold); transform: scale(1.3); }
 
         .pdp-info { text-align: center; padding: 0 10px; }
         .pdp-info h1 { font-size: 2.2rem; margin-bottom: 5px; line-height: 1.1; }
@@ -277,7 +279,8 @@
                 border-radius: 8px;
                 box-shadow: 0 15px 40px rgba(0,0,0,0.1);
                 aspect-ratio: 1 / 1.2;
-                max-height: 600px;
+                max-height: 550px; /* Reduced max height slightly */
+                background: #fff;
             }
 
             .pdp-info {
@@ -291,8 +294,10 @@
         .grid { display: grid; gap: 30px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
         .product-card { text-align: center; cursor: pointer; transition: transform 0.3s; }
         .product-card:hover { transform: translateY(-5px); }
+        
+        /* Grid Images Styling */
         .img-box { height: 350px; background: #fff; margin-bottom: 15px; overflow: hidden; }
-        .img-box img { width: 100%; height: 100%; object-fit: contain; }
+        .img-box img { width: 100%; height: 100%; object-fit: contain; padding: 10px; /* Added padding here too */ }
 
         /* --- Switch Logic --- */
         .active-page { display: block !important; animation: fadeIn 0.4s ease; }
