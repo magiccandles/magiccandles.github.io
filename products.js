@@ -21,7 +21,7 @@ const products = [
         price: 5,
         image: "poze/vanilie.png",
         image2: "poze/vanilie_2.png",
-        desc: "O armoă fină de vanilie."
+        desc: "O aromă fină de vanilie."
     },
     {
         id: 4,
@@ -102,6 +102,46 @@ const products = [
         image: "poze/coronita_craciun.png", 
         image2: "poze/coronita_craciun_2.png",
         desc: "Un miros ce iti aduce aminte de masa de Craciun in familie."
+    },
+    {
+        id: 15,
+        name: "Crema parfumata de Lamaie",
+        price: 5,
+        image: "poze/crema_lamaie.png", 
+        image2: "poze/crema_lamaie_2.png",
+        desc: "O crema fina de lamaie."
+    },
+    {
+        id: 16,
+        name: "Magnolie si Cirese",
+        price: 5,
+        image: "poze/magnolie_cirese.png", 
+        image2: "poze/magnolie_cirese_2.png",
+        desc: "Mireasma florilor de magnolie si cirese."
+    },
+    {
+        id: 17,
+        name: "Dimineti magice de Craciun",
+        price: 5,
+        image: "poze/dimineti_craciun.png", 
+        image2: "poze/dimineti_craciun_2.png",
+    //  desc: "O combinatie surprinzătoare de fistic cu sare."
+    },
+    {
+        id: 18,
+        name: "Tableta Pepene galben si Castravete",
+        price: 15,
+        image: "poze/pepenegalben_castravete.png", 
+        image2: "poze/pepenegalben_castravete_2.png",
+    //  desc: "O combinatie surprinzătoare de fistic cu sare."
+    },
+    {
+        id: 19,
+        name: "Tableta Cacao si Patchouli",
+        price: 15,
+        image: "poze/cacao_patchouli.png", 
+        image2: "poze/cacao_patchouli_2.png",
+        desc: "O combinatie de arome realizata dintr Cacao si flori Patchouli."
     },
     {
         id: 11,
