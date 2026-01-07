@@ -3,7 +3,7 @@
 <head>
     <meta name="google-site-verification" content="JquvTxmipnlhSSfDwSYVKFbDTn8nVa7yGfwjpMPnAFM" />
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Magic Candles & Art Deco | Lumina Magică</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
@@ -11,201 +11,178 @@
             --ivory: #F9F7F2;
             --warm-sand: #DBCBB0;
             --charcoal: #1A1A1A;
-            --transition-smooth: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            --transition-smooth: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         html { scroll-behavior: smooth; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             background-color: var(--ivory);
             color: var(--charcoal);
             font-family: 'Montserrat', sans-serif;
             overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
+            line-height: 1.6;
         }
 
         h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 500; }
 
-        /* --- Navigation --- */
+        /* --- Responsive Navigation --- */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 1.5rem 5%;
+            padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 2000; 
-            background: rgba(249, 247, 242, 0.9);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            backdrop-filter: blur(15px);
+            background: rgba(249, 247, 242, 0.95);
+            backdrop-filter: blur(10px);
+            height: 70px;
         }
 
         .logo { 
-            font-size: 1.3rem; 
+            font-size: 1rem; 
             text-transform: uppercase; 
-            letter-spacing: 2px; 
+            letter-spacing: 1px; 
             font-weight: 600; 
-            cursor: pointer;
+            max-width: 70%;
         }
 
         .hamburger {
             cursor: pointer;
-            padding: 10px;
+            padding: 5px;
             z-index: 2100;
         }
 
         .hamburger span {
             display: block;
-            height: 1.5px;
-            width: 24px;
+            height: 2px;
+            width: 25px;
             background-color: var(--charcoal);
-            margin: 6px 0;
+            margin: 5px 0;
             transition: var(--transition-smooth);
         }
         
         .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
         .hamburger.active span:nth-child(2) { opacity: 0; }
-        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
-        /* --- Menu Overlay --- */
+        /* --- Mobile Menu --- */
         .menu-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
+            inset: 0;
             background: var(--ivory);
             z-index: 1500; 
             display: flex;
             justify-content: center;
             align-items: center;
             clip-path: circle(0% at 90% 5%);
-            transition: clip-path 1s cubic-bezier(0.77, 0, 0.175, 1);
+            transition: clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1);
         }
 
         .menu-overlay.active { clip-path: circle(150% at 90% 5%); }
 
-        .menu-links { text-align: center; }
         .menu-links a {
             display: block;
             font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-size: 2rem;
             color: var(--charcoal);
             text-decoration: none;
-            margin: 1.2rem 0;
+            margin: 1.5rem 0;
             opacity: 0;
-            transform: translateY(30px);
-            transition: 0.5s ease;
+            transform: translateY(20px);
         }
 
         .menu-overlay.active .menu-links a { 
             opacity: 1; 
             transform: translateY(0); 
-            transition-delay: 0.4s;
+            transition: 0.5s ease forwards;
         }
 
-        /* --- Sections & Layout --- */
-        #main-site, #all-products-view, #product-page { width: 100%; display: none; }
-        #main-site.active-page, #all-products-view.active-page, #product-page.active-page { display: block; animation: fadeIn 0.5s ease; }
-        
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        #product-page, #all-products-view { padding-top: 100px; min-height: 100vh; background: #fff; }
-
+        /* --- Hero Section --- */
         .hero {
             height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
-                        url('h1.jpg') center/cover;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('h1.jpg') center/cover;
             color: white;
             text-align: center;
+            padding: 0 20px;
         }
 
-        .hero h1 { font-size: clamp(2.5rem, 7vw, 5rem); margin-bottom: 2rem; font-style: italic; }
+        .hero h1 { font-size: 2.8rem; margin-bottom: 1rem; font-style: italic; }
 
         .btn-primary {
-            padding: 1.2rem 3rem;
-            border: 1px solid var(--charcoal);
+            padding: 1rem 2rem;
             background: var(--charcoal);
             color: white;
-            text-decoration: none;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            font-size: 0.8rem;
-            transition: var(--transition-smooth);
+            letter-spacing: 2px;
+            font-size: 0.75rem;
+            border: none;
             cursor: pointer;
-            display: inline-block;
-            margin-top: 2rem;
         }
 
-        .btn-hero { background: transparent; border: 1px solid white; color: white; }
-        .btn-hero:hover { background: white; color: var(--charcoal); }
-
-        .section-padding { padding: 80px 5%; max-width: 1400px; margin: 0 auto; }
-        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 3rem; text-transform: uppercase; letter-spacing: 2px; }
-
-        /* --- Product Grids --- */
+        /* --- Grids --- */
+        .section-padding { padding: 60px 5%; max-width: 1200px; margin: 0 auto; }
+        
         .grid {
             display: grid;
-            gap: 2.5rem;
-            grid-template-columns: repeat(1, 1fr);
+            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         }
-        @media (min-width: 768px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (min-width: 1024px) { .grid { grid-template-columns: repeat(3, 1fr); } }
 
         .product-card {
             background: white;
-            padding: 15px;
-            transition: var(--transition-smooth);
-            cursor: pointer;
+            padding: 10px;
+            text-align: center;
         }
 
         .img-box {
-            position: relative;
-            height: 400px;
-            overflow: hidden;
-            margin-bottom: 1.5rem;
+            height: 350px;
+            margin-bottom: 15px;
             background: #fff;
         }
 
-        .img-box img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: contain; 
-            transition: 1.2s ease; 
-        }
-        
-        /* --- SLIDER STYLES --- */
+        .img-box img { width: 100%; height: 100%; object-fit: contain; }
+
+        /* --- Responsive Product Page --- */
+        #product-page, #all-products-view { padding-top: 90px; min-height: 100vh; }
+
         .pdp-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 3rem;
+            gap: 2rem;
         }
-        @media (min-width: 1024px) { .pdp-grid { grid-template-columns: 1fr 1fr; } }
 
+        @media (min-width: 1024px) {
+            .pdp-grid { grid-template-columns: 1.2fr 0.8fr; gap: 4rem; }
+            .logo { font-size: 1.3rem; }
+            .hero h1 { font-size: 5rem; }
+        }
+
+        /* --- Slider Logic --- */
         .slider-container {
             position: relative;
-            width: 100%;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            touch-action: pan-y; /* Allows swiping left/right but not up/down on the slider */
             background: #fff;
         }
 
         .slider-wrapper {
             display: flex;
-            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: transform 0.4s ease-out;
             width: 100%;
         }
 
         .slider-wrapper img {
             min-width: 100%;
             height: auto;
-            max-height: 75vh;
+            max-height: 60vh;
             object-fit: contain;
         }
 
@@ -213,17 +190,15 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(255,255,255,0.8);
+            background: rgba(255,255,255,0.7);
             border: none;
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-            z-index: 10;
-            font-size: 1.2rem;
-            display: none; /* Only show if image2 exists */
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            z-index: 5;
+            display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
         }
 
         .slider-btn.prev { left: 10px; }
@@ -240,21 +215,21 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: #ddd;
-            cursor: pointer;
-            transition: 0.3s;
+            background: #ccc;
         }
 
-        .dot.active { background: var(--charcoal); width: 20px; border-radius: 4px; }
-        
-        .back-link { cursor: pointer; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; margin-bottom: 2rem; display: inline-block; color: #777; }
+        .dot.active { background: var(--charcoal); width: 18px; border-radius: 4px; }
 
-        footer { background: var(--charcoal); color: white; padding: 60px 5%; text-align: center; }
-        .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 2rem; margin-top: 2rem; }
-        .footer-links a { color: var(--warm-sand); text-decoration: none; font-size: 0.8rem; }
+        .pdp-info h1 { font-size: 2rem; margin-bottom: 10px; }
+        .pdp-info .price { font-size: 1.3rem; color: #8b7355; margin-bottom: 1.5rem; display: block;}
 
-        .reveal { opacity: 0; transform: translateY(30px); transition: 1s ease-out; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+        /* --- Utility --- */
+        .active-page { display: block !important; animation: fadeIn 0.4s ease; }
+        #main-site, #all-products-view, #product-page { display: none; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        footer { background: var(--charcoal); color: white; padding: 40px 5%; text-align: center; font-size: 0.9rem; }
+        footer iframe { width: 100%; height: 250px; margin-top: 20px; border: 0; }
     </style>
 </head>
 <body>
@@ -262,9 +237,7 @@
     <nav>
         <div class="logo" onclick="switchPage('main-site')">Magic Candles & Art Deco</div>
         <div class="hamburger" id="nav-toggle">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span></span><span></span><span></span>
         </div>
     </nav>
 
@@ -272,191 +245,141 @@
         <div class="menu-links">
             <a href="#" onclick="closeMenu(); switchPage('main-site');">Acasă</a>
             <a href="#" onclick="closeMenu(); switchPage('all-products-view');">Colecție</a>
-            <a href="#" onclick="closeMenu(); switchPage('main-site'); setTimeout(() => { window.location.hash = 'about'; }, 100);">Povestea Noastră</a>
-            <a href="#" onclick="closeMenu(); switchPage('main-site'); setTimeout(() => { window.location.hash = 'contact'; }, 100);">Contact</a>
+            <a href="#" onclick="closeMenu(); switchPage('main-site');">Contact</a>
         </div>
     </div>
 
     <div id="main-site" class="active-page">
-        <section id="home" class="hero">
+        <section class="hero">
             <h1>Artă și Lumină</h1>
-            <button class="btn-primary btn-hero" onclick="switchPage('all-products-view')">Vezi Colecția</button>
+            <button class="btn-primary" onclick="switchPage('all-products-view')" style="background:transparent; border: 1px solid white;">Vezi Colecția</button>
         </section>
 
-        <section id="collection" class="section-padding">
-            <h2 class="section-title reveal">Colecția noastră</h2>
+        <section class="section-padding">
+            <h2 style="text-align: center; margin-bottom: 30px; text-transform: uppercase;">Noutăți</h2>
             <div class="grid" id="home-grid"></div>
-            <div style="text-align: center; margin-top: 3rem;">
-                <button class="btn-primary" onclick="switchPage('all-products-view')">Vezi Toate Produsele</button>
-            </div>
         </section>
-
-        <section id="about" style="background: var(--warm-sand);">
-            <div class="section-padding reveal" style="text-align: center;">
-                <h2 style="font-size: 3rem; margin-bottom: 2rem;">Lumina de dincolo de lacrimi</h2>
-                <p style="max-width: 800px; margin: 0 auto; font-size: 1.1rem; line-height: 1.8;">
-                    Fiecare piesă din colecția Magic Candles & Art Deco este creată manual, împletind ceara naturală cu elemente de design art deco pentru a aduce o atmosferă magică în casa ta.
-                </p>
+        
+        <footer>
+            <p>Magic Candles & Art Deco</p>
+            <div style="margin: 15px 0;">
+                <a href="https://www.tiktok.com/@magic_light_behind_tears" style="color: var(--warm-sand); text-decoration: none;">TikTok</a>
             </div>
-        </section>
-
-        <footer id="contact">
-            <div class="logo">Magic Candles & Art Deco</div>
-            <div class="footer-links">
-                <a href="https://www.tiktok.com/@magic_light_behind_tears" target="_blank">TikTok</a>
-                <a href="mailto:cristina_b_cretu@yahoo.com">Email</a>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d11394.032126297397!2d26.1025!3d44.4377!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sro!4v1714560000000!5m2!1sen!2sro" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-            </div>
-            <p style="margin-top: 50px; opacity: 0.4; font-size: 0.7rem;">© 2025 MAGIC CANDLES & ART DECO. TOATE DREPTURILE REZERVATE.</p>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d11394.398642055105!2d26.1025!3d44.4268!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sro!4v123456789"></iframe>
+            <p style="margin-top: 30px; opacity: 0.5; font-size: 0.7rem;">© 2026 MAGIC CANDLES & ART DECO</p>
         </footer>
     </div>
 
     <div id="all-products-view">
         <div class="section-padding">
-            <div class="back-link" onclick="switchPage('main-site')">← Înapoi la Acasă</div>
-            <h2 class="section-title">Întreaga Colecție</h2>
+            <p onclick="switchPage('main-site')" style="cursor:pointer; margin-bottom: 20px;">← Înapoi</p>
+            <h2 style="margin-bottom: 30px;">Toate Produsele</h2>
             <div class="grid" id="full-grid"></div>
         </div>
     </div>
 
     <div id="product-page">
         <div class="section-padding">
-            <div class="back-link" onclick="switchPage('main-site')">← Înapoi</div>
+            <p onclick="window.history.back()" style="cursor:pointer; margin-bottom: 20px;">← Înapoi</p>
             <div class="pdp-grid">
                 <div class="pdp-visual">
-                    <div class="slider-container">
-                        <button class="slider-btn prev" onclick="moveSlide(-1)">&#10094;</button>
-                        <button class="slider-btn next" onclick="moveSlide(1)">&#10095;</button>
-                        <div class="slider-wrapper" id="slider-wrapper">
-                            </div>
+                    <div class="slider-container" id="slider-container">
+                        <button class="slider-btn prev" onclick="moveSlide(-1)">❮</button>
+                        <button class="slider-btn next" onclick="moveSlide(1)">❯</button>
+                        <div class="slider-wrapper" id="slider-wrapper"></div>
                     </div>
-                    <div class="slider-dots" id="slider-dots">
-                        </div>
+                    <div class="slider-dots" id="slider-dots"></div>
                 </div>
                 <div class="pdp-info">
-                    <h1 id="pdp-name" style="font-size: 3.5rem; margin-bottom: 1rem;"></h1>
-                    <p id="pdp-price" style="font-size: 1.5rem; margin-bottom: 2rem; color: #8b7355;"></p>
-                    <p id="pdp-desc" style="margin-bottom: 2rem; line-height: 2;"></p>
+                    <h1 id="pdp-name"></h1>
+                    <span class="price" id="pdp-price"></span>
+                    <p id="pdp-desc" style="color: #666;"></p>
+                    <button class="btn-primary" style="margin-top: 30px; width: 100%;">Comandă pe WhatsApp</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script src="products.js"></script>
-
     <script>
         let currentSlideIndex = 0;
-        const homeGrid = document.getElementById('home-grid');
-        const fullGrid = document.getElementById('full-grid');
+        let touchStartX = 0;
+        let touchEndX = 0;
 
-        if (typeof products !== 'undefined') {
-            function createCard(p) {
-                return `
-                    <div class="product-card reveal active" onclick="viewProduct(${p.id})">
-                        <div class="img-box">
-                            <img src="${p.image}" alt="${p.name}">
-                        </div>
-                        <h3>${p.name}</h3>
-                        <p>${p.price}.00 RON</p>
-                    </div>
-                `;
-            }
-            products.slice(0, 3).forEach(p => homeGrid.innerHTML += createCard(p));
-            products.forEach(p => fullGrid.innerHTML += createCard(p));
+        // Render Grids
+        function init() {
+            if (typeof products === 'undefined') return;
+            const hGrid = document.getElementById('home-grid');
+            const fGrid = document.getElementById('full-grid');
+            
+            const cards = products.map(p => `
+                <div class="product-card" onclick="viewProduct(${p.id})">
+                    <div class="img-box"><img src="${p.image}" alt="${p.name}"></div>
+                    <h3>${p.name}</h3>
+                    <p>${p.price}.00 RON</p>
+                </div>
+            `).join('');
+
+            fGrid.innerHTML = cards;
+            hGrid.innerHTML = cards.split('</div>').slice(0, 3).join('</div>');
         }
 
-        function switchPage(pageId, pushState = true) {
-            document.querySelectorAll('#main-site, #all-products-view, #product-page').forEach(div => div.classList.remove('active-page'));
+        function switchPage(pageId, push = true) {
+            document.querySelectorAll('#main-site, #all-products-view, #product-page').forEach(p => p.classList.remove('active-page'));
             document.getElementById(pageId).classList.add('active-page');
-            window.scrollTo(0, 0);
-            if (pushState) history.pushState({ page: pageId }, "", "");
+            window.scrollTo(0,0);
+            if(push) history.pushState({page: pageId}, "", "");
         }
 
-        window.onpopstate = (e) => {
-            if (e.state && e.state.page) switchPage(e.state.page, false);
-            else switchPage('main-site', false);
-        };
-        history.replaceState({ page: 'main-site' }, "", "");
+        window.onpopstate = (e) => switchPage(e.state?.page || 'main-site', false);
 
         function viewProduct(id) {
             const p = products.find(prod => prod.id === id);
-            if (!p) return;
-
             document.getElementById('pdp-name').innerText = p.name;
             document.getElementById('pdp-price').innerText = p.price + '.00 RON';
             document.getElementById('pdp-desc').innerText = p.desc;
-            
-            // Setup Slider
+
             const wrapper = document.getElementById('slider-wrapper');
-            const dotContainer = document.getElementById('slider-dots');
-            const btns = document.querySelectorAll('.slider-btn');
+            const dots = document.getElementById('slider-dots');
+            wrapper.innerHTML = `<img src="${p.image}">` + (p.image2 ? `<img src="${p.image2}">` : '');
             
-            wrapper.innerHTML = "";
-            dotContainer.innerHTML = "";
+            dots.innerHTML = p.image2 ? '<div class="dot active"></div><div class="dot"></div>' : '';
+            document.querySelectorAll('.slider-btn').forEach(b => b.style.display = p.image2 ? 'flex' : 'none');
+            
             currentSlideIndex = 0;
-            wrapper.style.transform = "translateX(0)";
-
-            const images = [p.image];
-            if (p.image2) images.push(p.image2);
-
-            images.forEach((imgSrc, index) => {
-                const img = document.createElement('img');
-                img.src = imgSrc;
-                wrapper.appendChild(img);
-
-                const dot = document.createElement('div');
-                dot.className = index === 0 ? 'dot active' : 'dot';
-                dot.onclick = () => setSlide(index);
-                dotContainer.appendChild(dot);
-            });
-
-            // Show/Hide slider buttons
-            btns.forEach(btn => btn.style.display = images.length > 1 ? 'flex' : 'none');
-            dotContainer.style.display = images.length > 1 ? 'flex' : 'none';
-
+            updateSlider();
             switchPage('product-page');
         }
 
-        function moveSlide(step) {
-            const wrapper = document.getElementById('slider-wrapper');
-            const images = wrapper.querySelectorAll('img');
-            currentSlideIndex = (currentSlideIndex + step + images.length) % images.length;
-            updateSliderPosition();
+        function moveSlide(n) {
+            const imgs = document.querySelectorAll('#slider-wrapper img');
+            if (imgs.length < 2) return;
+            currentSlideIndex = (currentSlideIndex + n + imgs.length) % imgs.length;
+            updateSlider();
         }
 
-        function setSlide(index) {
-            currentSlideIndex = index;
-            updateSliderPosition();
-        }
-
-        function updateSliderPosition() {
+        function updateSlider() {
             const wrapper = document.getElementById('slider-wrapper');
-            const dots = document.querySelectorAll('.dot');
             wrapper.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
-            dots.forEach((dot, idx) => {
-                dot.classList.toggle('active', idx === currentSlideIndex);
-            });
+            document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === currentSlideIndex));
         }
 
-        // --- MENU ---
+        // Swipe Support
+        const sliderContainer = document.getElementById('slider-container');
+        sliderContainer.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
+        sliderContainer.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 50) moveSlide(1);
+            if (touchEndX - touchStartX > 50) moveSlide(-1);
+        });
+
+        // Menu
         const navToggle = document.getElementById('nav-toggle');
         const menu = document.getElementById('menu');
-        navToggle.addEventListener('click', () => {
-            menu.classList.toggle('active');
-            navToggle.classList.toggle('active');
-        });
-        function closeMenu() {
-            menu.classList.remove('active');
-            navToggle.classList.remove('active');
-        }
+        navToggle.onclick = () => { navToggle.classList.toggle('active'); menu.classList.toggle('active'); };
+        function closeMenu() { navToggle.classList.remove('active'); menu.classList.remove('active'); }
 
-        window.addEventListener('scroll', () => {
-            document.querySelectorAll('.reveal').forEach(reveal => {
-                const windowHeight = window.innerHeight;
-                if (reveal.getBoundingClientRect().top < windowHeight - 100) reveal.classList.add('active');
-            });
-        });
-        window.dispatchEvent(new Event('scroll'));
+        init();
     </script>
 </body>
 </html>
