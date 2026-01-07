@@ -27,7 +27,6 @@
 
         h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 500; }
 
-        /* --- Header & Nav (FIXED Z-INDEX) --- */
         nav {
             position: fixed;
             top: 0;
@@ -36,7 +35,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            /* FIX: Z-Index higher than menu overlay so you can click close */
             z-index: 2000; 
             background: rgba(249, 247, 242, 0.9);
             border-bottom: 1px solid rgba(0,0,0,0.05);
@@ -65,12 +63,10 @@
             transition: var(--transition-smooth);
         }
         
-        /* Hamburger Animation when active */
         .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
         .hamburger.active span:nth-child(2) { opacity: 0; }
         .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
 
-        /* --- Meniu Circular (Your Original Design) --- */
         .menu-overlay {
             position: fixed;
             top: 0;
@@ -78,7 +74,6 @@
             width: 100%;
             height: 100vh;
             background: var(--ivory);
-            /* FIX: Z-Index lower than Nav */
             z-index: 1500; 
             display: flex;
             justify-content: center;
@@ -109,8 +104,6 @@
             transition-delay: 0.4s;
         }
 
-        /* --- Sectiuni --- */
-        /* Pages */
         #main-site, #all-products-view, #product-page { width: 100%; display: none; }
         #main-site.active-page, #all-products-view.active-page, #product-page.active-page { display: block; animation: fadeIn 0.5s ease; }
         
@@ -154,7 +147,6 @@
         .section-padding { padding: 80px 5%; max-width: 1400px; margin: 0 auto; }
         .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 3rem; text-transform: uppercase; letter-spacing: 2px; }
 
-        /* --- Grid Produse --- */
         .grid {
             display: grid;
             gap: 2.5rem;
@@ -180,9 +172,15 @@
             background: #f4f4f4;
         }
 
-        .img-box img { width: 100%; height: 100%; object-fit: cover; transition: 1.2s ease; }
+        /* CHANGED: object-fit contain to show the whole pic */
+        .img-box img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: contain; 
+            background-color: white;
+            transition: 1.2s ease; 
+        }
         
-        /* --- Detalii Produs --- */
         .pdp-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -190,10 +188,17 @@
         }
         @media (min-width: 1024px) { .pdp-grid { grid-template-columns: 1fr 1fr; } }
 
-        .pdp-visual img { width: 100%; height: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        /* CHANGED: object-fit contain for detail view too */
+        .pdp-visual img { 
+            width: 100%; 
+            height: auto; 
+            max-height: 80vh;
+            object-fit: contain;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+        }
+        
         .back-link { cursor: pointer; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; margin-bottom: 2rem; display: inline-block; color: #777; }
 
-        /* --- Footer (Restored) --- */
         footer { background: var(--charcoal); color: white; padding: 60px 5%; text-align: center; }
         .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 2rem; margin-top: 2rem; }
         .footer-links a { color: var(--warm-sand); text-decoration: none; font-size: 0.8rem; }
@@ -230,9 +235,7 @@
 
         <section id="collection" class="section-padding">
             <h2 class="section-title reveal">Colecția noastră</h2>
-            
             <div class="grid" id="home-grid"></div>
-
             <div style="text-align: center; margin-top: 3rem;">
                 <button class="btn-primary" onclick="switchPage('all-products-view')">Vezi Toate Produsele</button>
             </div>
@@ -264,7 +267,6 @@
             <h2 class="section-title">Întreaga Colecție</h2>
             <div class="grid" id="full-grid"></div>
         </div>
-        
         <footer style="background: var(--charcoal); color: white; padding: 20px 5%; text-align: center; margin-top: 50px;">
             <p style="opacity: 0.4; font-size: 0.7rem;">© 2025 MAGIC CANDLES</p>
         </footer>
@@ -281,13 +283,12 @@
                     <h1 id="pdp-name" style="font-size: 3.5rem; margin-bottom: 1rem;">Nume Produs</h1>
                     <p id="pdp-price" style="font-size: 1.5rem; margin-bottom: 2rem; color: #8b7355;">0.00 RON</p>
                     <p id="pdp-desc" style="margin-bottom: 2rem; line-height: 2;">Descriere...</p>
-                    <!--
+                    
                     <ul style="margin-bottom: 2rem; list-style: none; font-size: 0.9rem;">
                         <li style="margin-bottom: 10px;"><strong>Timp ardere:</strong> 50+ Ore</li>
                         <li style="margin-bottom: 10px;"><strong>Ceară</strong> Naturală</li>
                         <li><strong>Fitil:</strong> Bumbac Organic</li>
                     </ul>
--->
                     <button class="btn-primary" style="background: var(--charcoal); border: none; width: 100%; padding: 1.5rem;">Adaugă în Coș</button>
                 </div>
             </div>
@@ -297,22 +298,13 @@
     <script src="products.js"></script>
 
     <script>
-        // --- RENDER PRODUCTS ---
         const homeGrid = document.getElementById('home-grid');
         const fullGrid = document.getElementById('full-grid');
 
-        // Render Home (Top 3)
         const topProducts = products.slice(0, 3);
-        topProducts.forEach(p => {
-            homeGrid.innerHTML += createCard(p);
-        });
+        topProducts.forEach(p => { homeGrid.innerHTML += createCard(p); });
+        products.forEach(p => { fullGrid.innerHTML += createCard(p); });
 
-        // Render All
-        products.forEach(p => {
-            fullGrid.innerHTML += createCard(p);
-        });
-
-        // Helper function to create HTML for a card
         function createCard(p) {
             return `
                 <div class="product-card reveal active" onclick="viewProduct(${p.id})">
@@ -325,17 +317,32 @@
             `;
         }
 
-        // --- NAVIGATION LOGIC ---
-        function switchPage(pageId) {
-            // Hide all pages
+        // --- NAVIGATION LOGIC WITH BACK BUTTON SUPPORT ---
+        function switchPage(pageId, pushState = true) {
             document.getElementById('main-site').classList.remove('active-page');
             document.getElementById('all-products-view').classList.remove('active-page');
             document.getElementById('product-page').classList.remove('active-page');
 
-            // Show selected
             document.getElementById(pageId).classList.add('active-page');
             window.scrollTo(0, 0);
+
+            // Add to browser history so phone back button works inside the app
+            if (pushState) {
+                history.pushState({ page: pageId }, "", "");
+            }
         }
+
+        // Handle the phone's back button
+        window.onpopstate = function(event) {
+            if (event.state && event.state.page) {
+                switchPage(event.state.page, false);
+            } else {
+                switchPage('main-site', false);
+            }
+        };
+
+        // Initialize history on first load
+        history.replaceState({ page: 'main-site' }, "", "");
 
         function viewProduct(id) {
             const product = products.find(p => p.id === id);
@@ -349,13 +356,12 @@
             switchPage('product-page');
         }
 
-        // --- MENU LOGIC (FIXED) ---
         const navToggle = document.getElementById('nav-toggle');
         const menu = document.getElementById('menu');
 
         navToggle.addEventListener('click', () => {
             menu.classList.toggle('active');
-            navToggle.classList.toggle('active'); // Rotates the hamburger
+            navToggle.classList.toggle('active');
         });
 
         function closeMenu() {
@@ -363,7 +369,6 @@
             navToggle.classList.remove('active');
         }
 
-        // Scroll Animations
         window.addEventListener('scroll', () => {
             const reveals = document.querySelectorAll('.reveal');
             reveals.forEach(reveal => {
