@@ -27,7 +27,7 @@
 
         h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 500; }
 
-        /* --- Header & Nav --- */
+        /* --- Header & Nav (FIXED Z-INDEX) --- */
         nav {
             position: fixed;
             top: 0;
@@ -36,7 +36,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 1000;
+            /* FIX: Z-Index higher than menu overlay so you can click close */
+            z-index: 2000; 
             background: rgba(249, 247, 242, 0.9);
             border-bottom: 1px solid rgba(0,0,0,0.05);
             backdrop-filter: blur(15px);
@@ -48,12 +49,10 @@
             letter-spacing: 2px; 
             font-weight: 600; 
             cursor: pointer;
-            z-index: 1101;
         }
 
         .hamburger {
             cursor: pointer;
-            z-index: 1100;
             padding: 10px;
         }
 
@@ -65,8 +64,13 @@
             margin: 6px 0;
             transition: var(--transition-smooth);
         }
+        
+        /* Hamburger Animation when active */
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
 
-        /* --- Meniu Circular --- */
+        /* --- Meniu Circular (Your Original Design) --- */
         .menu-overlay {
             position: fixed;
             top: 0;
@@ -74,7 +78,8 @@
             width: 100%;
             height: 100vh;
             background: var(--ivory);
-            z-index: 1050;
+            /* FIX: Z-Index lower than Nav */
+            z-index: 1500; 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -105,8 +110,13 @@
         }
 
         /* --- Sectiuni --- */
-        #main-site, #product-page { width: 100%; }
-        #product-page { display: none; padding-top: 100px; min-height: 100vh; background: #fff; }
+        /* Pages */
+        #main-site, #all-products-view, #product-page { width: 100%; display: none; }
+        #main-site.active-page, #all-products-view.active-page, #product-page.active-page { display: block; animation: fadeIn 0.5s ease; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        #product-page, #all-products-view { padding-top: 100px; min-height: 100vh; background: #fff; }
 
         .hero {
             height: 100vh;
@@ -114,7 +124,6 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            /* Background-ul foloseste h1.jpg din folderul tau */
             background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
                         url('h1.jpg') center/cover;
             color: white;
@@ -125,7 +134,8 @@
 
         .btn-primary {
             padding: 1.2rem 3rem;
-            border: 1px solid white;
+            border: 1px solid var(--charcoal);
+            background: var(--charcoal);
             color: white;
             text-decoration: none;
             text-transform: uppercase;
@@ -133,10 +143,13 @@
             font-size: 0.8rem;
             transition: var(--transition-smooth);
             cursor: pointer;
-            background: transparent;
+            display: inline-block;
+            margin-top: 2rem;
         }
 
-        .btn-primary:hover { background: white; color: var(--charcoal); }
+        .btn-hero { background: transparent; border: 1px solid white; color: white; }
+        .btn-hero:hover { background: white; color: var(--charcoal); }
+        .btn-primary:hover { background: transparent; color: var(--charcoal); }
 
         .section-padding { padding: 80px 5%; max-width: 1400px; margin: 0 auto; }
         .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 3rem; text-transform: uppercase; letter-spacing: 2px; }
@@ -168,10 +181,7 @@
         }
 
         .img-box img { width: 100%; height: 100%; object-fit: cover; transition: 1.2s ease; }
-        .hover-img { position: absolute; top: 0; left: 0; opacity: 0; }
-        .product-card:hover .main-img { opacity: 0; }
-        .product-card:hover .hover-img { opacity: 1; transform: scale(1.05); }
-
+        
         /* --- Detalii Produs --- */
         .pdp-grid {
             display: grid;
@@ -183,7 +193,7 @@
         .pdp-visual img { width: 100%; height: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         .back-link { cursor: pointer; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; margin-bottom: 2rem; display: inline-block; color: #777; }
 
-        /* --- Footer --- */
+        /* --- Footer (Restored) --- */
         footer { background: var(--charcoal); color: white; padding: 60px 5%; text-align: center; }
         .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 2rem; margin-top: 2rem; }
         .footer-links a { color: var(--warm-sand); text-decoration: none; font-size: 0.8rem; }
@@ -195,8 +205,9 @@
 <body>
 
     <nav>
-        <div class="logo" onclick="goHome()">Magic Candles & Art Deco</div>
+        <div class="logo" onclick="switchPage('main-site')">Magic Candles & Art Deco</div>
         <div class="hamburger" id="nav-toggle">
+            <span></span>
             <span></span>
             <span></span>
         </div>
@@ -204,47 +215,26 @@
 
     <div class="menu-overlay" id="menu">
         <div class="menu-links">
-            <a href="#home" onclick="closeMenu(); goHome();">Acasă</a>
-            <a href="#collection" onclick="closeMenu(); goHome();">Colecție</a>
-            <a href="#about" onclick="closeMenu(); goHome();">Povestea Noastră</a>
-            <a href="#contact" onclick="closeMenu(); goHome();">Contact</a>
+            <a href="#" onclick="closeMenu(); switchPage('main-site');">Acasă</a>
+            <a href="#" onclick="closeMenu(); switchPage('all-products-view');">Colecție</a>
+            <a href="#" onclick="closeMenu(); switchPage('main-site'); setTimeout(() => window.location.hash = 'about', 100);">Povestea Noastră</a>
+            <a href="#" onclick="closeMenu(); switchPage('main-site'); setTimeout(() => window.location.hash = 'contact', 100);">Contact</a>
         </div>
     </div>
 
-    <div id="main-site">
+    <div id="main-site" class="active-page">
         <section id="home" class="hero">
             <h1>Artă și Lumină</h1>
-            <a href="#collection" class="btn-primary">Vezi Colecția</a>
+            <button class="btn-primary btn-hero" onclick="switchPage('all-products-view')">Vezi Colecția</button>
         </section>
 
         <section id="collection" class="section-padding">
             <h2 class="section-title reveal">Colecția noastră</h2>
-            <div class="grid">
-                <div class="product-card reveal" onclick="viewProduct('Lumânare flori', '45', 'c1.jpg')">
-                    <div class="img-box">
-                        <img src="c1.jpg" class="main-img" alt="Lumânare">
-                    </div>
-                    <h3>Lumânare flori</h3>
-                    <p>45.00 RON</p>
-                </div>
+            
+            <div class="grid" id="home-grid"></div>
 
-                <div class="product-card reveal" onclick="viewProduct('Odorizant Trandafir Englezesc', '20', 'c2.jpg')">
-                    <div class="img-box">
-                        <img src="c2.jpg" class="main-img" alt="Lumânare">
-                        <img src="h2.jpg" class="hover-img" alt="Lumânare Detaliu">
-                    </div>
-                    <h3>Odorizant Trandafir Englezesc</h3>
-                    <p>20.00 RON</p>
-                </div>
-
-                <div class="product-card reveal" onclick="viewProduct('Ceară cu aromă de Pepene galben și castravete', '20', 'c3.jpg')">
-                    <div class="img-box">
-                        <img src="c3.jpg" class="main-img" alt="Lumânare">
-                        <img src="h1.jpg" class="hover-img" alt="Lumânare Detaliu">
-                    </div>
-                    <h3>Ceară cu aromă de Pepene galben și castravete</h3>
-                    <p>20.00 RON</p>
-                </div>
+            <div style="text-align: center; margin-top: 3rem;">
+                <button class="btn-primary" onclick="switchPage('all-products-view')">Vezi Toate Produsele</button>
             </div>
         </section>
 
@@ -264,13 +254,25 @@
                 <a href="mailto:cristina_b_cretu@yahoo.com">Email</a>
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d87781.53859821982!2d26.908859599999996!3d46.5640425!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b570183882e30b%3A0x2659d504aae13301!2zQmFjxIN1!5e0!3m2!1sen!2sro!4v1767027075558!5m2!1sen!2sro" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
-            <p style="margin-top: 50px; opacity: 0.4; font-size: 0.7rem; letter-spacing: 2px;">&copy; 2025 MAGIC CANDLES & ART DECO. TOATE DREPTURILE REZERVATE.</p>
+            <p style="margin-top: 50px; opacity: 0.4; font-size: 0.7rem; letter-spacing: 2px;">© 2025 MAGIC CANDLES & ART DECO. TOATE DREPTURILE REZERVATE.</p>
+        </footer>
+    </div>
+
+    <div id="all-products-view">
+        <div class="section-padding">
+            <div class="back-link" onclick="switchPage('main-site')">← Înapoi la Acasă</div>
+            <h2 class="section-title">Întreaga Colecție</h2>
+            <div class="grid" id="full-grid"></div>
+        </div>
+        
+        <footer style="background: var(--charcoal); color: white; padding: 20px 5%; text-align: center; margin-top: 50px;">
+            <p style="opacity: 0.4; font-size: 0.7rem;">© 2025 MAGIC CANDLES</p>
         </footer>
     </div>
 
     <div id="product-page">
         <div class="section-padding">
-            <div class="back-link" onclick="goHome()">← Înapoi la Colecție</div>
+            <div class="back-link" onclick="switchPage('main-site')">← Înapoi</div>
             <div class="pdp-grid">
                 <div class="pdp-visual">
                     <img id="pdp-img" src="" alt="Imagine Produs">
@@ -278,7 +280,7 @@
                 <div class="pdp-info">
                     <h1 id="pdp-name" style="font-size: 3.5rem; margin-bottom: 1rem;">Nume Produs</h1>
                     <p id="pdp-price" style="font-size: 1.5rem; margin-bottom: 2rem; color: #8b7355;">0.00 RON</p>
-                    <p style="margin-bottom: 2rem; line-height: 2;">O experiență aromatică deosebită, creată pentru a transforma spațiul tău într-un sanctuar al liniștii. Realizată din ceară 100% naturală.</p>
+                    <p id="pdp-desc" style="margin-bottom: 2rem; line-height: 2;">Descriere...</p>
                     
                     <ul style="margin-bottom: 2rem; list-style: none; font-size: 0.9rem;">
                         <li style="margin-bottom: 10px;"><strong>Timp ardere:</strong> 50+ Ore</li>
@@ -292,35 +294,76 @@
         </div>
     </div>
 
+    <script src="products.js"></script>
+
     <script>
+        // --- RENDER PRODUCTS ---
+        const homeGrid = document.getElementById('home-grid');
+        const fullGrid = document.getElementById('full-grid');
+
+        // Render Home (Top 3)
+        const topProducts = products.slice(0, 3);
+        topProducts.forEach(p => {
+            homeGrid.innerHTML += createCard(p);
+        });
+
+        // Render All
+        products.forEach(p => {
+            fullGrid.innerHTML += createCard(p);
+        });
+
+        // Helper function to create HTML for a card
+        function createCard(p) {
+            return `
+                <div class="product-card reveal active" onclick="viewProduct(${p.id})">
+                    <div class="img-box">
+                        <img src="${p.image}" class="main-img" alt="${p.name}">
+                    </div>
+                    <h3>${p.name}</h3>
+                    <p>${p.price}.00 RON</p>
+                </div>
+            `;
+        }
+
+        // --- NAVIGATION LOGIC ---
+        function switchPage(pageId) {
+            // Hide all pages
+            document.getElementById('main-site').classList.remove('active-page');
+            document.getElementById('all-products-view').classList.remove('active-page');
+            document.getElementById('product-page').classList.remove('active-page');
+
+            // Show selected
+            document.getElementById(pageId).classList.add('active-page');
+            window.scrollTo(0, 0);
+        }
+
+        function viewProduct(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+
+            document.getElementById('pdp-name').innerText = product.name;
+            document.getElementById('pdp-price').innerText = product.price + '.00 RON';
+            document.getElementById('pdp-img').src = product.image;
+            document.getElementById('pdp-desc').innerText = product.desc;
+
+            switchPage('product-page');
+        }
+
+        // --- MENU LOGIC (FIXED) ---
         const navToggle = document.getElementById('nav-toggle');
         const menu = document.getElementById('menu');
 
         navToggle.addEventListener('click', () => {
             menu.classList.toggle('active');
+            navToggle.classList.toggle('active'); // Rotates the hamburger
         });
 
         function closeMenu() {
             menu.classList.remove('active');
+            navToggle.classList.remove('active');
         }
 
-        // Functia pentru a deschide detaliile produsului
-        function viewProduct(name, price, img) {
-            document.getElementById('pdp-name').innerText = name;
-            document.getElementById('pdp-price').innerText = price + '.00 RON';
-            document.getElementById('pdp-img').src = img;
-            document.getElementById('main-site').style.display = 'none';
-            document.getElementById('product-page').style.display = 'block';
-            window.scrollTo(0, 0);
-        }
-
-        function goHome() {
-            document.getElementById('product-page').style.display = 'none';
-            document.getElementById('main-site').style.display = 'block';
-            window.scrollTo(0, 0);
-        }
-
-        // Animatii de dezvăluire la scroll
+        // Scroll Animations
         window.addEventListener('scroll', () => {
             const reveals = document.querySelectorAll('.reveal');
             reveals.forEach(reveal => {
