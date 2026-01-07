@@ -16,7 +16,7 @@ const products = [
     {
         id: 3,
         name: "Vanilie caldă",
-        price: 20,
+        price: 5,
         image: "poze/vanilie.png",
         desc: "O armoă fină de vanilie."
     },
