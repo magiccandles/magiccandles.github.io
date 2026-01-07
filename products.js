@@ -46,21 +46,21 @@ const products = [
         name: "Iarna ca-n povești",
         price: 5,
         image: "poze/iarna.png", 
-        desc: "Ceară parfumată cu arome de vanilie și lămâie."
+        desc: "Ceară parfumată cu arome de iarnă."
     },
     {
         id: 8,
         name: "Magia Craciunului",
         price: 5,
         image: "poze/magia_craciunului.png", 
-        desc: "Lumanare."
+        desc: "Lumanare festivă pentru momente magice."
     },
     {
         id: 9,
         name: "Fistic Sarat",
         price: 5,
         image: "poze/fistic_sarat.png", 
-        desc: "O combinatie de fistic cu sare."
+        desc: "O combinatie surprinzătoare de fistic cu sare."
     },
     {
         id: 10,
@@ -70,7 +70,7 @@ const products = [
         desc: "Mireasma craciunului, muguri de pin si vanilie."
     },
     {
-        id: 123,
+        id: 11,
         name: "Ciocolată & Portocale",
         price: 5,
         image: "poze/cioco_porto.png",
