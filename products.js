@@ -1,4 +1,4 @@
-const products = [
+23const products = [
     {
         id: 1,
         name: "Lumânare flori",
@@ -47,6 +47,27 @@ const products = [
         price: 5,
         image: "poze/iarna.png", 
         desc: "Ceară parfumată cu arome de vanilie și lămâie."
+    },
+    {
+        id: 8,
+        name: "Magia Craciunului",
+        price: 5,
+        image: "poze/magia_craciunului.png", 
+//      desc: "Ceară parfumată cu aromă de portocală coaptă."
+    },
+    {
+        id: 9,
+        name: "Fistic Sarat",
+        price: 5,
+        image: "poze/fistic_sarat.png", 
+        desc: "O combinatie de fistic cu sare.."
+    },
+    {
+        id: 10,
+        name: "Muguri de pin si Vanilie",
+        price: 5,
+        image: "poze/pin_vanilie.png", 
+        desc: "Mireasma craciunului, muguri de pin si vanilie."
     },
     {
         id: 100,
