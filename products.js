@@ -38,7 +38,7 @@ const products = [
         id: 100,
         name: "Ciocolată & Portocale",
         price: 5,
-        image: "poze/cioco.porto.png",
+        image: "poze/cioco_porto.png",
         desc: "Dulce și primitoare."
     }
 ];
