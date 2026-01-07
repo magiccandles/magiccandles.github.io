@@ -15,10 +15,10 @@ const products = [
     },
     {
         id: 3,
-        name: "Pepene & Castravete",
+        name: "Vanilie caldă",
         price: 20,
-        image: "c3.jpg",
-        desc: "O combinație fresh, ideală pentru a împrospăta aerul."
+        image: "poze/vanilie.png",
+        desc: "O armoă fină de vanilie."
     },
     {
         id: 4,
