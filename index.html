@@ -173,7 +173,6 @@
             background: #fff;
         }
 
-        /* FIXED: object-fit contain shows the WHOLE pic */
         .img-box img { 
             width: 100%; 
             height: 100%; 
@@ -181,6 +180,7 @@
             transition: 1.2s ease; 
         }
         
+        /* --- Product Detail Page (PDP) --- */
         .pdp-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -188,13 +188,38 @@
         }
         @media (min-width: 1024px) { .pdp-grid { grid-template-columns: 1fr 1fr; } }
 
+        .pdp-visual {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
         .pdp-visual img { 
             width: 100%; 
             height: auto; 
-            max-height: 80vh;
+            max-height: 70vh;
             object-fit: contain;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
         }
+
+        /* Gallery Thumbnails Style */
+        .secondary-images {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .thumb-img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            border: 1px solid #eee;
+            cursor: pointer;
+            transition: 0.3s;
+            background: #fff;
+        }
+
+        .thumb-img:hover { border-color: var(--charcoal); }
         
         .back-link { cursor: pointer; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; margin-bottom: 2rem; display: inline-block; color: #777; }
 
@@ -272,9 +297,9 @@
         <div class="section-padding">
             <div class="back-link" onclick="switchPage('main-site')">← Înapoi</div>
             <div class="pdp-grid">
-                <div class="pdp-visual">
+                <div class="pdp-visual" id="pdp-visual-container">
                     <img id="pdp-img" src="" alt="Imagine Produs">
-                </div>
+                    </div>
                 <div class="pdp-info">
                     <h1 id="pdp-name" style="font-size: 3.5rem; margin-bottom: 1rem;"></h1>
                     <p id="pdp-price" style="font-size: 1.5rem; margin-bottom: 2rem; color: #8b7355;"></p>
@@ -290,7 +315,6 @@
         const homeGrid = document.getElementById('home-grid');
         const fullGrid = document.getElementById('full-grid');
 
-        // Check if products list loaded from products.js
         if (typeof products !== 'undefined') {
             function createCard(p) {
                 return `
@@ -303,13 +327,10 @@
                     </div>
                 `;
             }
-
-            // Fill grids
             products.slice(0, 3).forEach(p => homeGrid.innerHTML += createCard(p));
             products.forEach(p => fullGrid.innerHTML += createCard(p));
         }
 
-        // --- NAVIGATION & BACK BUTTON ---
         function switchPage(pageId, pushState = true) {
             document.querySelectorAll('#main-site, #all-products-view, #product-page').forEach(div => div.classList.remove('active-page'));
             document.getElementById(pageId).classList.add('active-page');
@@ -326,14 +347,41 @@
         function viewProduct(id) {
             const p = products.find(prod => prod.id === id);
             if (!p) return;
+
             document.getElementById('pdp-name').innerText = p.name;
             document.getElementById('pdp-price').innerText = p.price + '.00 RON';
-            document.getElementById('pdp-img').src = p.image;
             document.getElementById('pdp-desc').innerText = p.desc;
+            
+            const mainImg = document.getElementById('pdp-img');
+            mainImg.src = p.image;
+
+            // --- GALLERY LOGIC ---
+            const visualContainer = document.getElementById('pdp-visual-container');
+            
+            // Remove old thumbnails
+            const oldThumbs = document.querySelector('.secondary-images');
+            if (oldThumbs) oldThumbs.remove();
+
+            // Create new thumbnails if image2 exists
+            const thumbContainer = document.createElement('div');
+            thumbContainer.className = 'secondary-images';
+
+            // Add first image to thumbs
+            const imgList = [p.image];
+            if (p.image2) imgList.push(p.image2);
+
+            imgList.forEach(src => {
+                const thumb = document.createElement('img');
+                thumb.src = src;
+                thumb.className = 'thumb-img';
+                thumb.onclick = () => { mainImg.src = src; };
+                thumbContainer.appendChild(thumb);
+            });
+
+            visualContainer.appendChild(thumbContainer);
             switchPage('product-page');
         }
 
-        // --- MENU LOGIC ---
         const navToggle = document.getElementById('nav-toggle');
         const menu = document.getElementById('menu');
 
@@ -347,7 +395,6 @@
             navToggle.classList.remove('active');
         }
 
-        // Reveal animations on scroll
         window.addEventListener('scroll', () => {
             document.querySelectorAll('.reveal').forEach(reveal => {
                 const windowHeight = window.innerHeight;
