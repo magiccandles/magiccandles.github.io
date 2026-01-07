@@ -169,7 +169,7 @@
             grid-template-columns: 1fr;
             gap: 2rem;
             width: 100%;
-            max-width: 500px; /* Constrain width on mobile */
+            max-width: 500px;
             margin: 0 auto;
         }
 
@@ -179,7 +179,7 @@
             flex-direction: column;
             align-items: center;
             position: relative;
-            background: #fff; /* White background behind image */
+            background: #fff;
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             overflow: hidden;
@@ -191,7 +191,7 @@
             overflow: hidden;
             touch-action: pan-y;
             aspect-ratio: 1 / 1.1; 
-            background: #fff; /* Ensures white background if image doesn't fit perfectly */
+            background: #fff;
         }
 
         .slider-wrapper {
@@ -200,14 +200,13 @@
             transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* FIX: Changed object-fit to CONTAIN so images fit inside without being cropped */
         .slider-wrapper img {
             flex: 0 0 100%;
             width: 100%;
             height: 100%;
-            object-fit: contain; /* This makes the image fit inside the box */
+            object-fit: contain;
             display: block;
-            padding: 10px; /* Adds a little breathing room */
+            padding: 10px;
         }
 
         .slider-btn {
@@ -249,7 +248,7 @@
             width: 8px; 
             height: 8px; 
             border-radius: 50%; 
-            background: rgba(0,0,0,0.2); /* Darker dots so they are visible on white */
+            background: rgba(0,0,0,0.2);
             backdrop-filter: blur(2px);
             transition: 0.3s; 
             box-shadow: 0 1px 3px rgba(255,255,255,0.5);
@@ -259,8 +258,94 @@
         .pdp-info { text-align: center; padding: 0 10px; }
         .pdp-info h1 { font-size: 2.2rem; margin-bottom: 5px; line-height: 1.1; }
         .price { font-size: 1.5rem; color: var(--gold); margin-bottom: 20px; display: block; font-family: 'Cormorant Garamond', serif; font-weight: 600;}
-        .pdp-info p { color: #555; font-size: 1rem; line-height: 1.8; }
+        
+        /* --- NEW TAB STYLES --- */
+        .tab-container {
+            margin-top: 20px;
+        }
+        
+        .tab-headers {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
 
+        .tab-btn {
+            background: none;
+            border: none;
+            padding-bottom: 10px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            color: #888;
+            cursor: pointer;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .tab-btn.active {
+            color: var(--charcoal);
+            font-weight: 600;
+        }
+        
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gold);
+        }
+
+        .tab-content {
+            display: none; /* Hidden by default */
+            text-align: left; /* Align text left for better readability */
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: block; /* Show active tab */
+        }
+
+        .tab-content p {
+            color: #555;
+            font-size: 1rem;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        /* Styling for the Specifications List */
+        .specs-list {
+            list-style: none;
+            padding: 0;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .specs-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 0.95rem;
+        }
+
+        .specs-list li:last-child {
+            border-bottom: none;
+        }
+
+        .specs-list li strong {
+            color: var(--charcoal);
+            font-weight: 500;
+        }
+
+        .specs-list li span {
+            color: #666;
+            text-align: right;
+        }
+        
         /* --- DESKTOP/TABLET RESPONSIVENESS for Product Page --- */
         @media (min-width: 850px) {
             .pdp-grid {
@@ -279,13 +364,21 @@
                 border-radius: 8px;
                 box-shadow: 0 15px 40px rgba(0,0,0,0.1);
                 aspect-ratio: 1 / 1.2;
-                max-height: 550px; /* Reduced max height slightly */
+                max-height: 550px;
                 background: #fff;
             }
 
             .pdp-info {
                 text-align: left;
                 padding-right: 20px;
+            }
+
+            .tab-headers {
+                justify-content: flex-start;
+            }
+
+            .tab-content p {
+                text-align: left;
             }
         }
 
@@ -297,7 +390,7 @@
         
         /* Grid Images Styling */
         .img-box { height: 350px; background: #fff; margin-bottom: 15px; overflow: hidden; }
-        .img-box img { width: 100%; height: 100%; object-fit: contain; padding: 10px; /* Added padding here too */ }
+        .img-box img { width: 100%; height: 100%; object-fit: contain; padding: 10px; }
 
         /* --- Switch Logic --- */
         .active-page { display: block !important; animation: fadeIn 0.4s ease; }
@@ -367,8 +460,7 @@
 
             <p>Contactează-ne</p>
             <div class="footer-links">
-               <!-- <a href="https://wa.me/407XXXXXXXX">WhatsApp</a> -->
-                <a href="mailto:cristina_b_cretu@yahoo.com">Email</a>
+               <a href="mailto:cristina_b_cretu@yahoo.com">Email</a>
                 <a href="https://www.tiktok.com/@magic_light_behind_tears">TikTok</a>
             </div>
             <p style="margin-top: 40px; opacity: 0.4; font-size: 0.7rem;">© 2026 MAGIC CANDLES & ART DECO</p>
@@ -397,10 +489,26 @@
                         <div class="slider-dots" id="slider-dots"></div>
                     </div>
                 </div>
+                
                 <div class="pdp-info">
                     <h1 id="pdp-name"></h1>
                     <span class="price" id="pdp-price"></span>
-                    <p id="pdp-desc"></p>
+                    
+                    <div class="tab-container">
+                        <div class="tab-headers">
+                            <button class="tab-btn active" onclick="switchTab('desc')">Descriere</button>
+                            <button class="tab-btn" onclick="switchTab('specs')">Specificații</button>
+                        </div>
+
+                        <div id="tab-desc" class="tab-content active">
+                            <p id="pdp-desc-text"></p>
+                        </div>
+
+                        <div id="tab-specs" class="tab-content">
+                            <div id="pdp-specs-list"></div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -462,23 +570,56 @@
             }, 400);
         }
 
+        // --- NEW TAB LOGIC ---
+        function switchTab(tabName) {
+            // Remove active class from all headers and contents
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            // Add active class to clicked button and corresponding content
+            const clickedBtn = Array.from(document.querySelectorAll('.tab-btn')).find(btn => btn.innerText.toLowerCase().includes(tabName === 'desc' ? 'descriere' : 'specificații'));
+            if(clickedBtn) clickedBtn.classList.add('active');
+            
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+        }
+
         function viewProduct(id) {
             const p = products.find(prod => prod.id === id);
             if(!p) return;
             
-            // Populate Text
+            // Populate Basic Info
             document.getElementById('pdp-name').innerText = p.name;
             document.getElementById('pdp-price').innerText = p.price + '.00 RON';
-            document.getElementById('pdp-desc').innerText = p.desc;
+            
+            // Populate Description Tab
+            document.getElementById('pdp-desc-text').innerText = p.desc;
 
-            // Populate Images
+            // Populate Specs Tab Logic
+            const specsContainer = document.getElementById('pdp-specs-list');
+            if(p.specs && Object.keys(p.specs).length > 0) {
+                let specsHtml = '<ul class="specs-list">';
+                for (const [key, value] of Object.entries(p.specs)) {
+                    specsHtml += `
+                        <li>
+                            <strong>${key}</strong>
+                            <span>${value}</span>
+                        </li>
+                    `;
+                }
+                specsHtml += '</ul>';
+                specsContainer.innerHTML = specsHtml;
+            } else {
+                specsContainer.innerHTML = '<p style="font-style:italic; opacity:0.7;">Nu există specificații pentru acest produs.</p>';
+            }
+
+            // Reset Tab to Description by default
+            switchTab('desc');
+
+            // Populate Images (same as before)
             const wrapper = document.getElementById('slider-wrapper');
             const dots = document.getElementById('slider-dots');
             
-            // Build Image HTML (Always include main image)
             let imgHtml = `<img src="${p.image}" draggable="false">`;
-            
-            // Check for second image
             let hasMultiple = false;
             if (p.image2 && p.image2.trim() !== "") {
                 imgHtml += `<img src="${p.image2}" draggable="false">`;
@@ -486,8 +627,6 @@
             }
             
             wrapper.innerHTML = imgHtml;
-            
-            // Setup Dots and Buttons
             dots.innerHTML = hasMultiple ? '<div class="dot active"></div><div class="dot"></div>' : '';
             document.querySelectorAll('.slider-btn').forEach(b => b.style.display = hasMultiple ? 'flex' : 'none');
             
@@ -523,10 +662,10 @@
 
         function handleSwipe() {
             const imgs = document.querySelectorAll('#slider-wrapper img');
-            if (imgs.length < 2) return; // Don't swipe if only 1 image
+            if (imgs.length < 2) return;
 
-            if (touchEndX < touchStartX - 50) moveSlide(1); // Swipe Left -> Next
-            if (touchEndX > touchStartX + 50) moveSlide(-1); // Swipe Right -> Prev
+            if (touchEndX < touchStartX - 50) moveSlide(1); 
+            if (touchEndX > touchStartX + 50) moveSlide(-1);
         }
 
         window.onload = init;
