@@ -10,7 +10,7 @@ const products = [
             "Greutate": "100g",
             "Format": "Lumanare in recipient de sticla cu aspect floral.",
             "Aromă": "Florala",
-            "Ambalaj": "Individual"
+            "Ambalaj": "Individual",
             "Provenienta ceara":"Soia naturala"
         }
     },
@@ -25,7 +25,7 @@ const products = [
             "Greutate": "45g",
             "Format": "Ceara de topit sub forma de tableta.",
             "Aromă": "Trandafir englezesc",
-            "Ambalaj": "Individual"
+            "Ambalaj": "Individual",
             "Provenienta ceara":"Soia naturala"
         }
     },
@@ -40,7 +40,7 @@ const products = [
             "Greutate": "10g",
             "Format": "Ceara de topit sub forma de pastila.",
             "Aromă": "Vanilie",
-            "Ambalaj": "Individual"
+            "Ambalaj": "Individual",
             "Provenienta ceara":"Soia naturala"
         }
     },
@@ -55,7 +55,7 @@ const products = [
             "Greutate": "10g",
             "Format": "Ceară topită",
             "Aromă": "Migdale; Ciocolata alba",
-            "Ambalaj": "Individual"
+            "Ambalaj": "Individual",
             "Provenienta ceara":"Soia naturala"
         }
     },
@@ -70,7 +70,7 @@ const products = [
             "Greutate": "10g",
             "Format": "Ceară topită",
             "Aromă": "Vanilie; Lamaie",
-            "Ambalaj": "Individual"
+            "Ambalaj": "Individual",
             "Provenienta ceara":"Soia naturala"
         }
     },
@@ -85,7 +85,7 @@ const products = [
             "Greutate": "10g",
             "Format": "Ceara de topit sub forma de pastila.",
             "Aromă": "Portocale",
-            "Ambalaj": "Individual"
+            "Ambalaj": "Individual",
             "Provenienta ceara":"Soia naturala"
         }
     },
@@ -100,7 +100,7 @@ const products = [
             "Greutate": "10g",
             "Format": "Ceara de topit sub forma de pastila.",
             "Aromă": "Scortisoara",
-            "Ambalaj": "Individual"
+            "Ambalaj": "Individual",
             "Provenienta ceara":"Soia naturala"
         }
     },
@@ -115,7 +115,7 @@ const products = [
             "Greutate": "10g",
             "Format": "Ceara de topit sub forma de pastila.",
             "Aromă": "Muguri de pin.",
-            "Ambalaj": "Individual"
+            "Ambalaj": "Individual",
             "Provenienta ceara":"Soia naturala"
         }
     },
@@ -130,7 +130,7 @@ const products = [
             "Greutate": "10g",
             "Format": "Ceara de topit sub forma de pastila.",
             "Aromă": "Fisitc; Sare",
-            "Ambalaj": "Individual"
+            "Ambalaj": "Individual",
             "Provenienta ceara":"Soia naturala"
         }
     },
@@ -145,7 +145,7 @@ const products = [
             "Greutate": "10g",
             "Format": "Ceara de topit sub forma de pastila.",
             "Aromă": "Muguri de pin; Vanilie",
-            "Ambalaj": "Individual"
+            "Ambalaj": "Individual",
             "Provenienta ceara":"Soia naturala"
         }
     },
@@ -160,7 +160,7 @@ const products = [
             "Greutate": "10g",
             "Format": "Ceara de topit sub forma de pastila.",
             "Aromă": "Clementine",
-            "Ambalaj": "Individual"
+            "Ambalaj": "Individual",
             "Provenienta ceara":"Soia naturala"
         }
     },
@@ -175,7 +175,7 @@ const products = [
             "Greutate": "10g",
             "Format": "Ceara de topit sub forma de pastila.",
             "Aromă": "Strudel cu mere",
-            "Ambalaj": "Individual"
+            "Ambalaj": "Individual",
             "Provenienta ceara":"Soia naturala"
         }
     },
@@ -190,7 +190,7 @@ const products = [
             "Greutate": "10g",
             "Format": "Ceara de topit sub forma de pastila.",
             "Aromă": "Vanilie; Pin",
-            "Ambalaj": "Individual"
+            "Ambalaj": "Individual",
             "Provenienta ceara":"Soia naturala"
         }
     },
@@ -205,7 +205,7 @@ const products = [
             "Greutate": "10g",
             "Format": "Ceara de topit sub forma de pastila.",
             "Aromă": "Lamaie",
-            "Ambalaj": "Individual"
+            "Ambalaj": "Individual",
             "Provenienta ceara":"Soia naturala"
         }
     },
@@ -220,7 +220,7 @@ const products = [
             "Greutate": "10g",
             "Format": "Ceara de topit sub forma de pastila.",
             "Aromă": "Magnolia; Cirese",
-            "Ambalaj": "Individual"
+            "Ambalaj": "Individual",
             "Provenienta ceara":"Soia naturala"
         }
     },
@@ -235,7 +235,7 @@ const products = [
             "Greutate": "10g",
             "Format": "Ceara de topit sub forma de pastila.",
             "Aromă": "Vanilie; Pin",
-            "Ambalaj": "Individual"
+            "Ambalaj": "Individual",
             "Provenienta ceara":"Soia naturala"
         }
     },
@@ -250,7 +250,7 @@ const products = [
             "Greutate": "45g",
             "Format": "Ceara de topit sub forma de tableta.",
             "Aromă": "Pepene Galben; Castravete",
-            "Ambalaj": "Individual"
+            "Ambalaj": "Individual",
             "Provenienta ceara":"Soia naturala"
         }
     },
@@ -265,7 +265,7 @@ const products = [
             "Greutate": "45g",
             "Format": "Ceara de topit sub forma de tableta.",
             "Aromă": "Cacao; Patchouli",
-            "Ambalaj": "Individual"
+            "Ambalaj": "Individual",
             "Provenienta ceara":"Soia naturala"
         }
     },
@@ -280,7 +280,7 @@ const products = [
             "Greutate": "10g",
             "Format": "Ceara de topit sub forma de pastila.",
             "Aromă": "Ciocolata; Portocale",
-            "Ambalaj": "Individual"
+            "Ambalaj": "Individual",
             "Provenienta ceara":"Soia naturala"
         }
     }
