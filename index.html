@@ -27,6 +27,7 @@
 
         h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 500; }
 
+        /* --- Navigation --- */
         nav {
             position: fixed;
             top: 0;
@@ -52,6 +53,7 @@
         .hamburger {
             cursor: pointer;
             padding: 10px;
+            z-index: 2100;
         }
 
         .hamburger span {
@@ -67,6 +69,7 @@
         .hamburger.active span:nth-child(2) { opacity: 0; }
         .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
 
+        /* --- Menu Overlay --- */
         .menu-overlay {
             position: fixed;
             top: 0;
@@ -85,7 +88,6 @@
         .menu-overlay.active { clip-path: circle(150% at 90% 5%); }
 
         .menu-links { text-align: center; }
-
         .menu-links a {
             display: block;
             font-family: 'Cormorant Garamond', serif;
@@ -104,6 +106,7 @@
             transition-delay: 0.4s;
         }
 
+        /* --- Sections & Layout --- */
         #main-site, #all-products-view, #product-page { width: 100%; display: none; }
         #main-site.active-page, #all-products-view.active-page, #product-page.active-page { display: block; animation: fadeIn 0.5s ease; }
         
@@ -142,11 +145,11 @@
 
         .btn-hero { background: transparent; border: 1px solid white; color: white; }
         .btn-hero:hover { background: white; color: var(--charcoal); }
-        .btn-primary:hover { background: transparent; color: var(--charcoal); }
 
         .section-padding { padding: 80px 5%; max-width: 1400px; margin: 0 auto; }
         .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 3rem; text-transform: uppercase; letter-spacing: 2px; }
 
+        /* --- Product Grids --- */
         .grid {
             display: grid;
             gap: 2.5rem;
@@ -162,22 +165,19 @@
             cursor: pointer;
         }
 
-        .product-card:hover { transform: translateY(-10px); }
-
         .img-box {
             position: relative;
             height: 400px;
             overflow: hidden;
             margin-bottom: 1.5rem;
-            background: #f4f4f4;
+            background: #fff;
         }
 
-        /* CHANGED: object-fit contain to show the whole pic */
+        /* FIXED: object-fit contain shows the WHOLE pic */
         .img-box img { 
             width: 100%; 
             height: 100%; 
             object-fit: contain; 
-            background-color: white;
             transition: 1.2s ease; 
         }
         
@@ -188,7 +188,6 @@
         }
         @media (min-width: 1024px) { .pdp-grid { grid-template-columns: 1fr 1fr; } }
 
-        /* CHANGED: object-fit contain for detail view too */
         .pdp-visual img { 
             width: 100%; 
             height: auto; 
@@ -222,8 +221,8 @@
         <div class="menu-links">
             <a href="#" onclick="closeMenu(); switchPage('main-site');">Acasă</a>
             <a href="#" onclick="closeMenu(); switchPage('all-products-view');">Colecție</a>
-            <a href="#" onclick="closeMenu(); switchPage('main-site'); setTimeout(() => window.location.hash = 'about', 100);">Povestea Noastră</a>
-            <a href="#" onclick="closeMenu(); switchPage('main-site'); setTimeout(() => window.location.hash = 'contact', 100);">Contact</a>
+            <a href="#" onclick="closeMenu(); switchPage('main-site'); setTimeout(() => { window.location.hash = 'about'; }, 100);">Povestea Noastră</a>
+            <a href="#" onclick="closeMenu(); switchPage('main-site'); setTimeout(() => { window.location.hash = 'contact'; }, 100);">Contact</a>
         </div>
     </div>
 
@@ -253,11 +252,11 @@
         <footer id="contact">
             <div class="logo">Magic Candles & Art Deco</div>
             <div class="footer-links">
-                <a href="https://www.tiktok.com/@magic_light_behind_tears?_r=1&_t=ZN-92IscB5MWik" target="_blank">TikTok</a>
+                <a href="https://www.tiktok.com/@magic_light_behind_tears" target="_blank">TikTok</a>
                 <a href="mailto:cristina_b_cretu@yahoo.com">Email</a>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d87781.53859821982!2d26.908859599999996!3d46.5640425!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b570183882e30b%3A0x2659d504aae13301!2zQmFjxIN1!5e0!3m2!1sen!2sro!4v1767027075558!5m2!1sen!2sro" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d11394.032126297397!2d26.1025!3d44.4377!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sro!4v1714560000000!5m2!1sen!2sro" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
             </div>
-            <p style="margin-top: 50px; opacity: 0.4; font-size: 0.7rem; letter-spacing: 2px;">© 2025 MAGIC CANDLES & ART DECO. TOATE DREPTURILE REZERVATE.</p>
+            <p style="margin-top: 50px; opacity: 0.4; font-size: 0.7rem;">© 2025 MAGIC CANDLES & ART DECO. TOATE DREPTURILE REZERVATE.</p>
         </footer>
     </div>
 
@@ -267,9 +266,6 @@
             <h2 class="section-title">Întreaga Colecție</h2>
             <div class="grid" id="full-grid"></div>
         </div>
-        <footer style="background: var(--charcoal); color: white; padding: 20px 5%; text-align: center; margin-top: 50px;">
-            <p style="opacity: 0.4; font-size: 0.7rem;">© 2025 MAGIC CANDLES</p>
-        </footer>
     </div>
 
     <div id="product-page">
@@ -280,17 +276,9 @@
                     <img id="pdp-img" src="" alt="Imagine Produs">
                 </div>
                 <div class="pdp-info">
-                    <h1 id="pdp-name" style="font-size: 3.5rem; margin-bottom: 1rem;">Nume Produs</h1>
-                    <p id="pdp-price" style="font-size: 1.5rem; margin-bottom: 2rem; color: #8b7355;">0.00 RON</p>
-                    <p id="pdp-desc" style="margin-bottom: 2rem; line-height: 2;">Descriere...</p>
-                    <!--
-                    <ul style="margin-bottom: 2rem; list-style: none; font-size: 0.9rem;">
-                        <li style="margin-bottom: 10px;"><strong>Timp ardere:</strong> 50+ Ore</li>
-                        <li style="margin-bottom: 10px;"><strong>Ceară</strong> Naturală</li>
-                        <li><strong>Fitil:</strong> Bumbac Organic</li>
-                    </ul>
-                    <button class="btn-primary" style="background: var(--charcoal); border: none; width: 100%; padding: 1.5rem;">Adaugă în Coș</button>
-                    -->
+                    <h1 id="pdp-name" style="font-size: 3.5rem; margin-bottom: 1rem;"></h1>
+                    <p id="pdp-price" style="font-size: 1.5rem; margin-bottom: 2rem; color: #8b7355;"></p>
+                    <p id="pdp-desc" style="margin-bottom: 2rem; line-height: 2;"></p>
                 </div>
             </div>
         </div>
@@ -302,61 +290,50 @@
         const homeGrid = document.getElementById('home-grid');
         const fullGrid = document.getElementById('full-grid');
 
-        const topProducts = products.slice(0, 3);
-        topProducts.forEach(p => { homeGrid.innerHTML += createCard(p); });
-        products.forEach(p => { fullGrid.innerHTML += createCard(p); });
-
-        function createCard(p) {
-            return `
-                <div class="product-card reveal active" onclick="viewProduct(${p.id})">
-                    <div class="img-box">
-                        <img src="${p.image}" class="main-img" alt="${p.name}">
+        // Check if products list loaded from products.js
+        if (typeof products !== 'undefined') {
+            function createCard(p) {
+                return `
+                    <div class="product-card reveal active" onclick="viewProduct(${p.id})">
+                        <div class="img-box">
+                            <img src="${p.image}" alt="${p.name}">
+                        </div>
+                        <h3>${p.name}</h3>
+                        <p>${p.price}.00 RON</p>
                     </div>
-                    <h3>${p.name}</h3>
-                    <p>${p.price}.00 RON</p>
-                </div>
-            `;
+                `;
+            }
+
+            // Fill grids
+            products.slice(0, 3).forEach(p => homeGrid.innerHTML += createCard(p));
+            products.forEach(p => fullGrid.innerHTML += createCard(p));
         }
 
-        // --- NAVIGATION LOGIC WITH BACK BUTTON SUPPORT ---
+        // --- NAVIGATION & BACK BUTTON ---
         function switchPage(pageId, pushState = true) {
-            document.getElementById('main-site').classList.remove('active-page');
-            document.getElementById('all-products-view').classList.remove('active-page');
-            document.getElementById('product-page').classList.remove('active-page');
-
+            document.querySelectorAll('#main-site, #all-products-view, #product-page').forEach(div => div.classList.remove('active-page'));
             document.getElementById(pageId).classList.add('active-page');
             window.scrollTo(0, 0);
-
-            // Add to browser history so phone back button works inside the app
-            if (pushState) {
-                history.pushState({ page: pageId }, "", "");
-            }
+            if (pushState) history.pushState({ page: pageId }, "", "");
         }
 
-        // Handle the phone's back button
-        window.onpopstate = function(event) {
-            if (event.state && event.state.page) {
-                switchPage(event.state.page, false);
-            } else {
-                switchPage('main-site', false);
-            }
+        window.onpopstate = (e) => {
+            if (e.state && e.state.page) switchPage(e.state.page, false);
+            else switchPage('main-site', false);
         };
-
-        // Initialize history on first load
         history.replaceState({ page: 'main-site' }, "", "");
 
         function viewProduct(id) {
-            const product = products.find(p => p.id === id);
-            if (!product) return;
-
-            document.getElementById('pdp-name').innerText = product.name;
-            document.getElementById('pdp-price').innerText = product.price + '.00 RON';
-            document.getElementById('pdp-img').src = product.image;
-            document.getElementById('pdp-desc').innerText = product.desc;
-
+            const p = products.find(prod => prod.id === id);
+            if (!p) return;
+            document.getElementById('pdp-name').innerText = p.name;
+            document.getElementById('pdp-price').innerText = p.price + '.00 RON';
+            document.getElementById('pdp-img').src = p.image;
+            document.getElementById('pdp-desc').innerText = p.desc;
             switchPage('product-page');
         }
 
+        // --- MENU LOGIC ---
         const navToggle = document.getElementById('nav-toggle');
         const menu = document.getElementById('menu');
 
@@ -370,9 +347,9 @@
             navToggle.classList.remove('active');
         }
 
+        // Reveal animations on scroll
         window.addEventListener('scroll', () => {
-            const reveals = document.querySelectorAll('.reveal');
-            reveals.forEach(reveal => {
+            document.querySelectorAll('.reveal').forEach(reveal => {
                 const windowHeight = window.innerHeight;
                 const revealTop = reveal.getBoundingClientRect().top;
                 if (revealTop < windowHeight - 100) reveal.classList.add('active');
