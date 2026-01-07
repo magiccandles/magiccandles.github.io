@@ -96,6 +96,14 @@ const products = [
         desc: "Un miros ce iti aduce aminte de strudelele copilariei"
     },
     {
+        id: 14,
+        name: "Coronita de Craciun",
+        price: 5,
+        image: "poze/coronita_craciun.png", 
+        image2: "poze/coronita_craciun_2.png",
+        desc: "Un miros ce iti aduce aminte de masa de Craciun in familie."
+    },
+    {
         id: 11,
         name: "Ciocolată & Portocale",
         price: 5,
