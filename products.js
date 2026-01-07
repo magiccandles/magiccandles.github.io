@@ -53,14 +53,14 @@ const products = [
         name: "Magia Craciunului",
         price: 5,
         image: "poze/magia_craciunului.png", 
-//      desc: "Ceară parfumată cu aromă de portocală coaptă."
+        desc: "Lumanare."
     },
     {
         id: 9,
         name: "Fistic Sarat",
         price: 5,
         image: "poze/fistic_sarat.png", 
-        desc: "O combinatie de fistic cu sare.."
+        desc: "O combinatie de fistic cu sare."
     },
     {
         id: 10,
