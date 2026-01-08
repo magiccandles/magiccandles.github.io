@@ -127,9 +127,8 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            /* Note: Make sure h1.jpg exists in the folder or change this */
             background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('h1.jpg') center/cover;
-            background-color: #333; /* Fallback color */
+            background-color: #333;
             color: white;
             text-align: center;
             padding: 0 20px;
@@ -261,7 +260,6 @@
         .pdp-info h1 { font-size: 2.2rem; margin-bottom: 5px; line-height: 1.1; }
         .price { font-size: 1.5rem; color: var(--gold); margin-bottom: 20px; display: block; font-family: 'Cormorant Garamond', serif; font-weight: 600;}
         
-        /* --- NEW TAB STYLES --- */
         .tab-container { margin-top: 20px; }
         .tab-headers {
             display: flex;
@@ -314,7 +312,6 @@
         .specs-list li strong { color: var(--charcoal); font-weight: 500; }
         .specs-list li span { color: #666; text-align: right; }
         
-        /* --- Responsive --- */
         @media (min-width: 850px) {
             .pdp-grid {
                 grid-template-columns: 1.2fr 1fr;
@@ -337,11 +334,227 @@
 
         /* --- Grids --- */
         .section-padding { padding: 80px 5%; max-width: 1200px; margin: 0 auto; }
-        .grid { display: grid; gap: 30px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+        
+        /* Initial Grid State */
+        .grid { 
+            display: grid; 
+            gap: 30px; 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            transition: all 0.3s ease;
+        }
+
         .product-card { text-align: center; cursor: pointer; transition: transform 0.3s; }
         .product-card:hover { transform: translateY(-5px); }
-        .img-box { height: 350px; background: #fff; margin-bottom: 15px; overflow: hidden; }
+        .img-box { height: 350px; background: #fff; margin-bottom: 15px; overflow: hidden; border-radius: 4px; transition: all 0.3s ease; }
         .img-box img { width: 100%; height: 100%; object-fit: contain; padding: 10px; }
+
+        /* --- Toolbar & Filter Styles --- */
+        .collection-toolbar {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+            align-items: center;
+        }
+        
+        @media(min-width: 600px) {
+            .collection-toolbar {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+
+        .view-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .view-btn {
+            background: white;
+            border: 1px solid #ddd;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s;
+            color: #999;
+        }
+
+        .view-btn svg { width: 20px; height: 20px; fill: currentColor; }
+        .view-btn:hover { border-color: var(--gold); color: var(--gold); }
+        .view-btn.active { background: var(--charcoal); color: white; border-color: var(--charcoal); }
+
+        /* Filter Controls */
+        .filter-wrapper {
+            position: relative;
+            z-index: 1000;
+        }
+
+        .filter-toggle-btn {
+            padding: 10px 20px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+        
+        .filter-toggle-btn:hover { border-color: var(--gold); }
+        .filter-toggle-btn.active { background: var(--gold); color: white; border-color: var(--gold); }
+
+        .filter-dropdown {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        @media(min-width: 600px) {
+            .filter-dropdown { left: 0; transform: none; }
+        }
+
+        .filter-dropdown.show { display: block; opacity: 1; }
+
+        .filter-group { margin-bottom: 20px; }
+        .filter-group label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 8px; color: var(--charcoal); text-transform: uppercase; }
+        .filter-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Montserrat', sans-serif;
+            outline: none;
+        }
+
+        /* NEW Checkbox Styles for Multi-Select */
+        .aroma-trigger {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #f9f9f9;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+        
+        .aroma-trigger:hover {
+            border-color: var(--gold);
+        }
+
+        .checkbox-group {
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            gap: 8px;
+            max-height: 180px;
+            overflow-y: auto;
+            border: 1px solid #eee;
+            padding: 10px;
+            border-radius: 4px;
+            background: white;
+            margin-top: 5px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .checkbox-group.open {
+            display: flex;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 400; /* reset bold */
+            text-transform: none; /* reset uppercase */
+            cursor: pointer;
+            font-size: 0.95rem;
+            margin-bottom: 0;
+            color: #555;
+        }
+
+        .checkbox-group input {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--charcoal);
+            cursor: pointer;
+        }
+        
+        .apply-filters-btn {
+            width: 100%;
+            padding: 10px;
+            background: var(--charcoal);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            margin-top: 10px;
+        }
+
+        /* --- View Modes Logic --- */
+        
+        /* 1. View: 1 by 1 */
+        .grid.mode-1 { grid-template-columns: 1fr !important; }
+        .grid.mode-1 .img-box { height: 400px; } 
+
+        /* 2. View: 2 in a row */
+        .grid.mode-2 { grid-template-columns: 1fr 1fr !important; gap: 15px; }
+        .grid.mode-2 .img-box { height: 250px; } 
+        .grid.mode-2 h3 { font-size: 1rem; }
+
+        /* 3. View: Compact List */
+        .grid.mode-list { grid-template-columns: 1fr !important; gap: 10px; }
+        .grid.mode-list .product-card {
+            display: flex;
+            align-items: center;
+            text-align: left;
+            padding: 10px;
+            background: #fff;
+            border: 1px solid #f0f0f0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+        }
+        .grid.mode-list .product-card:hover { transform: none; box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
+        
+        .grid.mode-list .img-box {
+            width: 70px;
+            height: 70px;
+            margin-bottom: 0;
+            margin-right: 20px;
+            flex-shrink: 0;
+            border: 1px solid #eee;
+        }
+        
+        .grid.mode-list .card-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            width: 100%;
+        }
+        
+        .grid.mode-list h3 { font-size: 1rem; margin: 0; line-height: 1.3; }
+        .grid.mode-list p { margin: 5px 0 0 0; font-weight: 600; color: var(--gold); }
+
 
         /* --- Switch Logic --- */
         .active-page { display: block !important; animation: fadeIn 0.4s ease; }
@@ -414,8 +627,70 @@
     <div id="all-products-view">
         <div class="section-padding">
             <p onclick="switchPage('main-site')" style="cursor:pointer; margin-bottom: 20px; font-size: 0.8rem;">← ÎNAPOI</p>
-            <h2 style="margin-bottom: 40px; text-transform: uppercase; text-align: center;">Întreaga Colecție</h2>
+            <h2 style="margin-bottom: 20px; text-transform: uppercase; text-align: center;">Întreaga Colecție</h2>
+            
+            <div class="collection-toolbar">
+                <div class="filter-wrapper">
+                    <button class="filter-toggle-btn" onclick="toggleFilterMenu()">
+                        <span>⇅ Filtrare & Sortare</span>
+                    </button>
+                    
+                    <div class="filter-dropdown" id="filter-dropdown">
+                        <div class="filter-group">
+                            <label>Ordonează după</label>
+                            <select id="sort-select">
+                                <option value="newest">Cele mai noi</option>
+                                <option value="price-asc">Preț: Mic la Mare</option>
+                                <option value="price-desc">Preț: Mare la Mic</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label>Categorii</label>
+                            
+                            <div class="aroma-trigger" onclick="toggleAromaList(event)">
+                                <span>Arome</span>
+                                <span id="aroma-arrow">▼</span>
+                            </div>
+
+                            <div class="checkbox-group" id="aroma-list">
+                                <label><input type="checkbox" value="floral" class="cat-checkbox"> Florale (Trandafir, Magnolie)</label>
+                                <label><input type="checkbox" value="vanilla" class="cat-checkbox"> Vanilie</label>
+                                <label><input type="checkbox" value="citrus" class="cat-checkbox"> Citrice</label>
+                                <label><input type="checkbox" value="chocolate" class="cat-checkbox"> Ciocolată / Cacao</label>
+                                <label><input type="checkbox" value="winter" class="cat-checkbox"> Iarnă (Pin, Scorțișoară)</label>
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <label>Buget</label>
+                            <select id="price-range-select">
+                                <option value="all">Oricare</option>
+                                <option value="under-10">Sub 10 RON</option>
+                                <option value="10-20">10 - 20 RON</option>
+                                <option value="over-20">Peste 20 RON</option>
+                            </select>
+                        </div>
+
+                        <button class="apply-filters-btn" onclick="applyFilters()">Aplică Filtre</button>
+                    </div>
+                </div>
+
+                <div class="view-controls">
+                    <button class="view-btn" onclick="changeView('mode-1')" title="1 per row">
+                        <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/></svg>
+                    </button>
+                    <button class="view-btn" onclick="changeView('mode-2')" title="2 per row">
+                        <svg viewBox="0 0 24 24"><path d="M4 4h7v16H4zm9 0h7v16h-7z"/></svg>
+                    </button>
+                    <button class="view-btn" onclick="changeView('mode-list')" title="Compact List">
+                        <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+                    </button>
+                </div>
+            </div>
+
             <div class="grid" id="full-grid"></div>
+            <div id="no-results" style="display:none; text-align:center; padding: 40px; color:#888;">Nu am găsit produse care să corespundă filtrelor tale.</div>
         </div>
     </div>
 
@@ -457,319 +732,141 @@
         </div>
     </div>
 
-    <script>
-        // --- 1. HERE IS YOUR PRODUCT DATA (EMBEDDED) ---
-        const products = [
-            {
-                id: 1,
-                name: "Lumânare flori",
-                price: 20,
-                image: "c1.jpg",
-                image2: "c1_alt.jpg",
-                desc: "O lumânare delicată cu motive florale, turnată manual.",
-                specs: {
-                    "Greutate": "100g",
-                    "Format": "Lumanare in recipient de sticla cu aspect floral.",
-                    "Aromă": "Florala",
-                    "Ambalaj": "Individual",
-                    "Provenienta ceara":"Soia naturala"
-                }
-            },
-            {
-                id: 2,
-                name: "Odorizant Trandafir",
-                price: 15,
-                image: "c2.jpg",
-                image2: "poze/c2_alt.png",
-                desc: "Parfumul clasic și elegant al trandafirilor englezești.",
-                specs: {
-                    "Greutate": "45g",
-                    "Format": "Ceara de topit sub forma de tableta.",
-                    "Aromă": "Trandafir englezesc",
-                    "Ambalaj": "Individual",
-                    "Provenienta ceara":"Soia naturala"
-                }
-            },
-            {
-                id: 3,
-                name: "Vanilie caldă",
-                price: 5,
-                image: "poze/vanilie.png",
-                image2: "poze/vanilie_2.png",
-                desc: "O aromă fină de vanilie.",
-                specs: {
-                    "Greutate": "10g",
-                    "Format": "Ceara de topit sub forma de pastila.",
-                    "Aromă": "Vanilie",
-                    "Ambalaj": "Individual",
-                    "Provenienta ceara":"Soia naturala"
-                }
-            },
-            {
-                id: 4,
-                name: "Migdale & Ciocolată albă",
-                price: 5,
-                image: "poze/migdale_choco_alba.png", 
-                image2: "poze/migdale_choco_alba_2.png",
-                desc: "Relaxare totală cu note profunde de migdale și ciocolată albă.",
-                specs: {
-                    "Greutate": "10g",
-                    "Format": "Ceară topită",
-                    "Aromă": "Migdale; Ciocolata alba",
-                    "Ambalaj": "Individual",
-                    "Provenienta ceara":"Soia naturala"
-                }
-            },
-            {
-                id: 5,
-                name: "Vanilie & Lămâie",
-                price: 5,
-                image: "poze/vanilie_lamaie.png", 
-                image2: "poze/vanilie_lamaie_2.png",
-                desc: "Ceară parfumată cu arome de vanilie și lămâie.",
-                specs: {
-                    "Greutate": "10g",
-                    "Format": "Ceară topită",
-                    "Aromă": "Vanilie; Lamaie",
-                    "Ambalaj": "Individual",
-                    "Provenienta ceara":"Soia naturala"
-                }
-            },
-            {
-                id: 6,
-                name: "Portocale Coapte",
-                price: 5,
-                image: "poze/portocale.png", 
-                image2: "poze/portocale_2.png",
-                desc: "Ceară parfumată cu aromă de portocală coaptă.",
-                specs: {
-                    "Greutate": "10g",
-                    "Format": "Ceara de topit sub forma de pastila.",
-                    "Aromă": "Portocale",
-                    "Ambalaj": "Individual",
-                    "Provenienta ceara":"Soia naturala"
-                }
-            },
-            {
-                id: 7,
-                name: "Iarna ca-n povești",
-                price: 5,
-                image: "poze/iarna.png", 
-                image2: "poze/iarna_2.png",
-                desc: "Ceară parfumată cu arome de iarnă.",
-                specs: {
-                    "Greutate": "10g",
-                    "Format": "Ceara de topit sub forma de pastila.",
-                    "Aromă": "Scortisoara",
-                    "Ambalaj": "Individual",
-                    "Provenienta ceara":"Soia naturala"
-                }
-            },
-            {
-                id: 8,
-                name: "Magia Craciunului",
-                price: 5,
-                image: "poze/magia_craciunului.png", 
-                image2: "poze/magia_craciunului_2.png",
-                desc: "Lumanare festivă pentru momente magice.",
-                specs: {
-                    "Greutate": "10g",
-                    "Format": "Ceara de topit sub forma de pastila.",
-                    "Aromă": "Muguri de pin.",
-                    "Ambalaj": "Individual",
-                    "Provenienta ceara":"Soia naturala"
-                }
-            },
-            {
-                id: 9,
-                name: "Fistic Sarat",
-                price: 5,
-                image: "poze/fistic_sarat.png", 
-                image2: "poze/fistic_sarat_2.png",
-                desc: "O combinatie surprinzătoare de fistic cu sare.",
-                specs: {
-                    "Greutate": "10g",
-                    "Format": "Ceara de topit sub forma de pastila.",
-                    "Aromă": "Fisitc; Sare",
-                    "Ambalaj": "Individual",
-                    "Provenienta ceara":"Soia naturala"
-                }
-            },
-            {
-                id: 10,
-                name: "Muguri de pin si Vanilie",
-                price: 5,
-                image: "poze/pin_vanilie.png", 
-                image2: "poze/pin_vanilie_2.png",
-                desc: "Mireasma craciunului, muguri de pin si vanilie.",
-                specs: {
-                    "Greutate": "10g",
-                    "Format": "Ceara de topit sub forma de pastila.",
-                    "Aromă": "Muguri de pin; Vanilie",
-                    "Ambalaj": "Individual",
-                    "Provenienta ceara":"Soia naturala"
-                }
-            },
-            {
-                id: 12,
-                name: "Clementine dulci",
-                price: 5,
-                image: "poze/clementine.png", 
-                image2: "poze/clementine_2.png",
-                desc: "O aroma inimaginabila de clementine dulci.",
-                specs: {
-                    "Greutate": "10g",
-                    "Format": "Ceara de topit sub forma de pastila.",
-                    "Aromă": "Clementine",
-                    "Ambalaj": "Individual",
-                    "Provenienta ceara":"Soia naturala"
-                }
-            },
-            {
-                id: 13,
-                name: "Strudel cu mere",
-                price: 5,
-                image: "poze/strudel_mere.png", 
-                image2: "poze/strudel_mere_2.png",
-                desc: "Un miros ce iti aduce aminte de strudelele copilariei",
-                specs: {
-                    "Greutate": "10g",
-                    "Format": "Ceara de topit sub forma de pastila.",
-                    "Aromă": "Strudel cu mere",
-                    "Ambalaj": "Individual",
-                    "Provenienta ceara":"Soia naturala"
-                }
-            },
-            {
-                id: 14,
-                name: "Coronita de Craciun",
-                price: 5,
-                image: "poze/coronita_craciun.png", 
-                image2: "poze/coronita_craciun_2.png",
-                desc: "Un miros ce iti aduce aminte de masa de Craciun in familie.",
-                specs: {
-                    "Greutate": "10g",
-                    "Format": "Ceara de topit sub forma de pastila.",
-                    "Aromă": "Vanilie; Pin",
-                    "Ambalaj": "Individual",
-                    "Provenienta ceara":"Soia naturala"
-                }
-            },
-            {
-                id: 15,
-                name: "Crema parfumata de Lamaie",
-                price: 5,
-                image: "poze/crema_lamaie.png", 
-                image2: "poze/crema_lamaie_2.png",
-                desc: "O crema fina de lamaie.",
-                specs: {
-                    "Greutate": "10g",
-                    "Format": "Ceara de topit sub forma de pastila.",
-                    "Aromă": "Lamaie",
-                    "Ambalaj": "Individual",
-                    "Provenienta ceara":"Soia naturala"
-                }
-            },
-            {
-                id: 16,
-                name: "Magnolie si Cirese",
-                price: 5,
-                image: "poze/magnolie_cirese.png", 
-                image2: "poze/magnolie_cirese_2.png",
-                desc: "Mireasma florilor de magnolie si cirese.",
-                specs: {
-                    "Greutate": "10g",
-                    "Format": "Ceara de topit sub forma de pastila.",
-                    "Aromă": "Magnolia; Cirese",
-                    "Ambalaj": "Individual",
-                    "Provenienta ceara":"Soia naturala"
-                }
-            },
-            {
-                id: 17,
-                name: "Dimineti magice de Craciun",
-                price: 5,
-                image: "poze/dimineti_craciun.png", 
-                image2: "poze/dimineti_craciun_2.png",
-                desc: "Atmosfera proaspătă și revigorantă a dimineților de iarnă.",
-                specs: {
-                    "Greutate": "10g",
-                    "Format": "Ceara de topit sub forma de pastila.",
-                    "Aromă": "Vanilie; Pin",
-                    "Ambalaj": "Individual",
-                    "Provenienta ceara":"Soia naturala"
-                }
-            },
-            {
-                id: 18,
-                name: "Tableta Pepene galben si Castravete",
-                price: 15,
-                image: "poze/pepenegalben_castravete.png", 
-                image2: "poze/pepenegalben_castravete_2.png",
-                desc: "O combinație fresh de vară, pepene dulce și castravete răcoritor.",
-                specs: {
-                    "Greutate": "45g",
-                    "Format": "Ceara de topit sub forma de tableta.",
-                    "Aromă": "Pepene Galben; Castravete",
-                    "Ambalaj": "Individual",
-                    "Provenienta ceara":"Soia naturala"
-                }
-            },
-            {
-                id: 19,
-                name: "Tableta Cacao si Patchouli",
-                price: 15,
-                image: "poze/cacao_patchouli.png", 
-                image2: "poze/cacao_patchouli_2.png",
-                desc: "O combinatie de arome realizata din Cacao si flori Patchouli.",
-                specs: {
-                    "Greutate": "45g",
-                    "Format": "Ceara de topit sub forma de tableta.",
-                    "Aromă": "Cacao; Patchouli",
-                    "Ambalaj": "Individual",
-                    "Provenienta ceara":"Soia naturala"
-                }
-            },
-            {
-                id: 11,
-                name: "Ciocolată & Portocale",
-                price: 5,
-                image: "poze/cioco_porto.png",
-                image2: "poze/cioco_porto_2.png",
-                desc: "Dulce și primitoare.",
-                specs: {
-                    "Greutate": "10g",
-                    "Format": "Ceara de topit sub forma de pastila.",
-                    "Aromă": "Ciocolata; Portocale",
-                    "Ambalaj": "Individual",
-                    "Provenienta ceara":"Soia naturala"
-                }
-            }
-        ];
+    <script src="products.js"></script>
 
-        // --- 2. YOUR ORIGINAL LOGIC STARTS HERE ---
+    <script>
         let currentSlideIndex = 0;
         let touchStartX = 0;
         let touchEndX = 0;
 
         function init() {
-            // Because we merged the data, products is now definitely defined!
-            if (typeof products === 'undefined') {
-                console.error("Products.js file not found or empty.");
-                return;
+            // Render the first 3 on home
+            const homeGrid = document.getElementById('home-grid');
+            if(homeGrid) homeGrid.innerHTML = products.slice(0, 3).map(p => createCard(p)).join('');
+            
+            // Render all on full grid
+            applyFilters(); // Initial render with defaults
+        }
+
+        // --- NEW FILTERING LOGIC ---
+        function toggleFilterMenu() {
+            const dropdown = document.getElementById('filter-dropdown');
+            const btn = document.querySelector('.filter-toggle-btn');
+            dropdown.classList.toggle('show');
+            btn.classList.toggle('active');
+        }
+
+        // --- TOGGLE AROMA LIST (NEW) ---
+        function toggleAromaList(event) {
+            // This prevents the click from bubbling up and closing the main menu
+            event.stopPropagation();
+            
+            const list = document.getElementById('aroma-list');
+            const arrow = document.getElementById('aroma-arrow');
+            
+            list.classList.toggle('open');
+            
+            if(list.classList.contains('open')) {
+                arrow.innerText = '▲';
+            } else {
+                arrow.innerText = '▼';
             }
-            document.getElementById('full-grid').innerHTML = products.map(p => createCard(p)).join('');
-            document.getElementById('home-grid').innerHTML = products.slice(0, 3).map(p => createCard(p)).join('');
+        }
+
+        function applyFilters() {
+            const sortVal = document.getElementById('sort-select').value;
+            const priceVal = document.getElementById('price-range-select').value;
+            
+            // Get selected checkboxes
+            const checkedBoxes = document.querySelectorAll('.cat-checkbox:checked');
+            const selectedCategories = Array.from(checkedBoxes).map(cb => cb.value);
+
+            // 1. Filter Category/Keywords
+            let filtered = products.filter(p => {
+                const combinedText = (p.name + " " + p.desc + " " + (p.specs?.Aromă || "")).toLowerCase();
+                
+                // Helper to check specific category
+                const matchesCategory = (cat) => {
+                    if (cat === 'floral') return combinedText.includes('flor') || combinedText.includes('trandafir') || combinedText.includes('magnolie');
+                    if (cat === 'vanilla') return combinedText.includes('vanilie');
+                    if (cat === 'citrus') return combinedText.includes('citrice') || combinedText.includes('lamaie') || combinedText.includes('portocal') || combinedText.includes('clementin');
+                    if (cat === 'chocolate') return combinedText.includes('ciocola') || combinedText.includes('cacao');
+                    if (cat === 'winter') return combinedText.includes('iarna') || combinedText.includes('pin') || combinedText.includes('craciun') || combinedText.includes('scortisoara');
+                    return false;
+                };
+
+                // If no categories selected, return true (show all). 
+                // If categories are selected, return true if product matches AT LEAST ONE of them.
+                if (selectedCategories.length === 0) return true;
+                
+                return selectedCategories.some(cat => matchesCategory(cat));
+            });
+
+            // 2. Filter Price Range
+            filtered = filtered.filter(p => {
+                if (priceVal === 'under-10') return p.price < 10;
+                if (priceVal === '10-20') return p.price >= 10 && p.price <= 20;
+                if (priceVal === 'over-20') return p.price > 20;
+                return true;
+            });
+
+            // 3. Sort
+            if (sortVal === 'price-asc') {
+                filtered.sort((a, b) => a.price - b.price);
+            } else if (sortVal === 'price-desc') {
+                filtered.sort((a, b) => b.price - a.price);
+            } else {
+                 filtered.sort((a, b) => a.id - b.id);
+            }
+
+            renderGrid(filtered);
+            
+            // Close menu on mobile after applying
+            document.getElementById('filter-dropdown').classList.remove('show');
+            document.querySelector('.filter-toggle-btn').classList.remove('active');
+        }
+
+        function renderGrid(data) {
+            const grid = document.getElementById('full-grid');
+            const noResults = document.getElementById('no-results');
+            
+            if (data.length === 0) {
+                grid.innerHTML = '';
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+                grid.innerHTML = data.map(p => createCard(p)).join('');
+            }
         }
 
         function createCard(p) {
             return `
                 <div class="product-card" onclick="viewProduct(${p.id})">
                     <div class="img-box"><img src="${p.image}" alt="${p.name}" onerror="this.src='https://placehold.co/400x400?text=No+Image'"></div>
-                    <h3>${p.name}</h3>
-                    <p>${p.price}.00 RON</p>
+                    <div class="card-info">
+                        <h3>${p.name}</h3>
+                        <p>${p.price}.00 RON</p>
+                    </div>
                 </div>
             `;
+        }
+
+        // --- VIEW SWITCHER LOGIC ---
+        function changeView(mode) {
+            const grid = document.getElementById('full-grid');
+            
+            // Remove existing modes
+            grid.classList.remove('mode-1', 'mode-2', 'mode-list');
+            
+            // Add new mode
+            if (mode) grid.classList.add(mode);
+
+            // Update buttons state
+            document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+            const btns = document.querySelectorAll('.view-btn');
+            if(mode === 'mode-1') btns[0].classList.add('active');
+            else if(mode === 'mode-2') btns[1].classList.add('active');
+            else if(mode === 'mode-list') btns[2].classList.add('active');
         }
 
         function switchPage(pageId, push = true) {
@@ -802,7 +899,6 @@
             }, 400);
         }
 
-        // --- NEW TAB LOGIC ---
         function switchTab(tabName) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
@@ -873,7 +969,6 @@
             document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === currentSlideIndex));
         }
 
-        // --- MOBILE SWIPE LOGIC ---
         const sliderContainer = document.getElementById('slider-container');
         
         sliderContainer.addEventListener('touchstart', e => {
@@ -894,6 +989,16 @@
         }
 
         window.onload = init;
+        
+        // Close filter when clicking outside
+        window.onclick = function(event) {
+            // Updated to ensure we don't close when clicking inside the new aroma list
+            if (!event.target.closest('.filter-wrapper')) {
+                document.getElementById('filter-dropdown').classList.remove('show');
+                const btn = document.querySelector('.filter-toggle-btn');
+                if(btn) btn.classList.remove('active');
+            }
+        }
     </script>
 </body>
 </html>
