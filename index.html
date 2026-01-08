@@ -28,7 +28,6 @@
 
         h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 500; }
 
-        /* --- Navigation --- */
         nav {
             position: fixed;
             top: 0;
@@ -79,7 +78,6 @@
         .hamburger.active span:nth-child(2) { opacity: 0; }
         .hamburger.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); width: 100%; }
 
-        /* --- Menu Overlay --- */
         .menu-overlay {
             position: fixed;
             inset: 0;
@@ -120,7 +118,6 @@
             transition: 0.5s ease forwards;
         }
 
-        /* --- Hero --- */
         .hero {
             height: 100vh;
             display: flex;
@@ -132,9 +129,42 @@
             color: white;
             text-align: center;
             padding: 0 20px;
+            position: relative;
         }
 
-        .hero h1 { font-size: 3rem; margin-bottom: 1.5rem; font-style: italic; }
+        .hero::before,
+        .hero::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 15%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .hero::before {
+            top: 0;
+            background: linear-gradient(to bottom, var(--ivory) 0%, transparent 100%);
+        }
+
+        .hero::after {
+            bottom: 0;
+            background: linear-gradient(to top, var(--ivory) 0%, transparent 100%);
+        }
+
+        .hero h1 { 
+            font-size: 3rem; 
+            margin-bottom: 1.5rem; 
+            font-style: italic;
+            position: relative;
+            z-index: 3;
+        }
+
+        .hero .btn-primary {
+            position: relative;
+            z-index: 3;
+        }
 
         .btn-primary {
             padding: 1rem 2.5rem;
@@ -155,7 +185,87 @@
             color: var(--charcoal);
         }
 
-        /* --- Product Page Styling --- */
+        .gallery-section {
+            width: 100%;
+            height: 60vh; 
+            max-height: 600px;
+            min-height: 300px;
+            position: relative;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .gallery-section::before,
+        .gallery-section::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 15%; 
+            z-index: 5;
+            pointer-events: none; 
+        }
+
+        .gallery-section::before {
+            top: 0;
+            background: linear-gradient(to bottom, var(--ivory) 0%, transparent 100%);
+        }
+
+        .gallery-section::after {
+            bottom: 0;
+            background: linear-gradient(to top, var(--ivory) 0%, transparent 100%);
+        }
+
+        .gallery-track {
+            display: flex;
+            height: 100%;
+            will-change: transform;
+        }
+        
+        .gallery-animating {
+            transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .gallery-item {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(5px);
+            border: none;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: 0.3s;
+        }
+        .gallery-nav:hover { background: rgba(255,255,255,0.4); }
+        .gallery-prev { left: 20px; }
+        .gallery-next { right: 20px; }
+        
+        @media (max-width: 768px) {
+            .gallery-nav { display: none; }
+        }
+
         #product-page .section-padding {
             padding-top: 100px;
             padding-bottom: 50px;
@@ -332,10 +442,8 @@
             .tab-content p { text-align: left; }
         }
 
-        /* --- Grids --- */
         .section-padding { padding: 80px 5%; max-width: 1200px; margin: 0 auto; }
         
-        /* Initial Grid State */
         .grid { 
             display: grid; 
             gap: 30px; 
@@ -348,7 +456,6 @@
         .img-box { height: 350px; background: #fff; margin-bottom: 15px; overflow: hidden; border-radius: 4px; transition: all 0.3s ease; }
         .img-box img { width: 100%; height: 100%; object-fit: contain; padding: 10px; }
 
-        /* --- Toolbar & Filter Styles --- */
         .collection-toolbar {
             display: flex;
             flex-direction: column;
@@ -388,7 +495,6 @@
         .view-btn:hover { border-color: var(--gold); color: var(--gold); }
         .view-btn.active { background: var(--charcoal); color: white; border-color: var(--charcoal); }
 
-        /* Filter Controls */
         .filter-wrapper {
             position: relative;
             z-index: 1000;
@@ -443,7 +549,6 @@
             outline: none;
         }
 
-        /* NEW Checkbox Styles for Multi-Select */
         .aroma-trigger {
             width: 100%;
             padding: 10px;
@@ -462,7 +567,7 @@
         }
 
         .checkbox-group {
-            display: none; /* Hidden by default */
+            display: none; 
             flex-direction: column;
             gap: 8px;
             max-height: 180px;
@@ -483,8 +588,8 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            font-weight: 400; /* reset bold */
-            text-transform: none; /* reset uppercase */
+            font-weight: 400; 
+            text-transform: none; 
             cursor: pointer;
             font-size: 0.95rem;
             margin-bottom: 0;
@@ -510,18 +615,13 @@
             margin-top: 10px;
         }
 
-        /* --- View Modes Logic --- */
-        
-        /* 1. View: 1 by 1 */
         .grid.mode-1 { grid-template-columns: 1fr !important; }
         .grid.mode-1 .img-box { height: 400px; } 
 
-        /* 2. View: 2 in a row */
         .grid.mode-2 { grid-template-columns: 1fr 1fr !important; gap: 15px; }
         .grid.mode-2 .img-box { height: 250px; } 
         .grid.mode-2 h3 { font-size: 1rem; }
 
-        /* 3. View: Compact List */
         .grid.mode-list { grid-template-columns: 1fr !important; gap: 10px; }
         .grid.mode-list .product-card {
             display: flex;
@@ -555,13 +655,10 @@
         .grid.mode-list h3 { font-size: 1rem; margin: 0; line-height: 1.3; }
         .grid.mode-list p { margin: 5px 0 0 0; font-weight: 600; color: var(--gold); }
 
-
-        /* --- Switch Logic --- */
         .active-page { display: block !important; animation: fadeIn 0.4s ease; }
         #main-site, #all-products-view, #product-page { display: none; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* --- Footer --- */
         footer { background: var(--charcoal); color: white; padding: 60px 5%; text-align: center; }
         .map-wrapper { width: 100%; height: 350px; margin-bottom: 40px; border-radius: 4px; overflow: hidden; filter: grayscale(20%); }
         .footer-links { margin: 20px 0; display: flex; flex-direction: column; gap: 10px; align-items: center; }
@@ -591,6 +688,12 @@
             <button class="btn-primary" onclick="switchPage('all-products-view')" style="background:transparent; border: 1px solid white;">Vezi Colecția</button>
         </section>
 
+        <section class="gallery-section" id="home-gallery">
+            <button class="gallery-nav gallery-prev" onclick="galleryMove(-1)">❮</button>
+            <div class="gallery-track" id="gallery-track">
+                </div>
+            <button class="gallery-nav gallery-next" onclick="galleryMove(1)">❯</button>
+        </section>
         <section class="section-padding">
             <h2 style="text-align: center; margin-bottom: 40px; text-transform: uppercase;">Produse Recomandate</h2>
             <div class="grid" id="home-grid"></div>
@@ -739,16 +842,125 @@
         let touchStartX = 0;
         let touchEndX = 0;
 
+        let galleryImages = [];
+        for(let i=1; i<=30; i++) {
+            galleryImages.push(`gallery${i}.jpg`);
+        }
+        
+        let galleryIndex = 1; 
+        let galleryInterval;
+        let galleryTouchStart = 0;
+        let galleryTouchEnd = 0;
+        let isGalleryAnimating = false;
+        let galleryTrack = null;
+        let gallerySlides = [];
+
         function init() {
-            // Render the first 3 on home
             const homeGrid = document.getElementById('home-grid');
             if(homeGrid) homeGrid.innerHTML = products.slice(0, 3).map(p => createCard(p)).join('');
             
-            // Render all on full grid
-            applyFilters(); // Initial render with defaults
+            applyFilters(); 
+
+            initGallery();
         }
 
-        // --- NEW FILTERING LOGIC ---
+        function initGallery() {
+            galleryTrack = document.getElementById('gallery-track');
+            if(!galleryTrack) return;
+
+            const firstSlide = galleryImages[0];
+            const lastSlide = galleryImages[galleryImages.length - 1];
+            
+            let html = `
+                <div class="gallery-item">
+                    <img src="${lastSlide}" alt="Clone Last" onerror="this.src='https://placehold.co/800x600?text=Imagine+Lipsă';">
+                </div>
+            `;
+            
+            galleryImages.forEach((src, idx) => {
+                html += `
+                    <div class="gallery-item">
+                        <img src="${src}" alt="Gallery Image ${idx+1}" onerror="this.src='https://placehold.co/800x600?text=Imagine+Lipsă';">
+                    </div>
+                `;
+            });
+
+            html += `
+                <div class="gallery-item">
+                    <img src="${firstSlide}" alt="Clone First" onerror="this.src='https://placehold.co/800x600?text=Imagine+Lipsă';">
+                </div>
+            `;
+
+            galleryTrack.innerHTML = html;
+            gallerySlides = document.querySelectorAll('.gallery-item');
+
+            galleryTrack.style.transform = `translateX(-100%)`;
+
+            startGalleryTimer();
+
+            const gallerySection = document.getElementById('home-gallery');
+            gallerySection.addEventListener('touchstart', e => {
+                galleryTouchStart = e.changedTouches[0].screenX;
+                stopGalleryTimer(); 
+            }, {passive: true});
+
+            gallerySection.addEventListener('touchend', e => {
+                galleryTouchEnd = e.changedTouches[0].screenX;
+                handleGallerySwipe();
+                startGalleryTimer(); 
+            }, {passive: true});
+        }
+
+        function galleryMove(direction) {
+            if (isGalleryAnimating) return;
+            isGalleryAnimating = true;
+
+            galleryIndex += direction;
+            
+            galleryTrack.classList.add('gallery-animating');
+            galleryTrack.style.transform = `translateX(-${galleryIndex * 100}%)`;
+
+            setTimeout(() => {
+                checkGalleryBounds();
+                isGalleryAnimating = false;
+            }, 1500); 
+        }
+
+        function checkGalleryBounds() {
+            const totalSlides = gallerySlides.length;
+
+            if (galleryIndex >= totalSlides - 1) {
+                galleryTrack.classList.remove('gallery-animating'); 
+                galleryIndex = 1;
+                galleryTrack.style.transform = `translateX(-${galleryIndex * 100}%)`;
+            }
+            else if (galleryIndex <= 0) {
+                galleryTrack.classList.remove('gallery-animating'); 
+                galleryIndex = totalSlides - 2;
+                galleryTrack.style.transform = `translateX(-${galleryIndex * 100}%)`;
+            }
+        }
+
+        function handleGallerySwipe() {
+            if (galleryTouchEnd < galleryTouchStart - 50) {
+                galleryMove(1); 
+            }
+            if (galleryTouchEnd > galleryTouchStart + 50) {
+                galleryMove(-1);
+            }
+        }
+
+        function startGalleryTimer() {
+            clearInterval(galleryInterval);
+            galleryInterval = setInterval(() => {
+                galleryMove(1); 
+            }, 3000);
+        }
+
+        function stopGalleryTimer() {
+            clearInterval(galleryInterval);
+        }
+
         function toggleFilterMenu() {
             const dropdown = document.getElementById('filter-dropdown');
             const btn = document.querySelector('.filter-toggle-btn');
@@ -756,16 +968,11 @@
             btn.classList.toggle('active');
         }
 
-        // --- TOGGLE AROMA LIST (NEW) ---
         function toggleAromaList(event) {
-            // This prevents the click from bubbling up and closing the main menu
             event.stopPropagation();
-            
             const list = document.getElementById('aroma-list');
             const arrow = document.getElementById('aroma-arrow');
-            
             list.classList.toggle('open');
-            
             if(list.classList.contains('open')) {
                 arrow.innerText = '▲';
             } else {
@@ -776,16 +983,12 @@
         function applyFilters() {
             const sortVal = document.getElementById('sort-select').value;
             const priceVal = document.getElementById('price-range-select').value;
-            
-            // Get selected checkboxes
             const checkedBoxes = document.querySelectorAll('.cat-checkbox:checked');
             const selectedCategories = Array.from(checkedBoxes).map(cb => cb.value);
 
-            // 1. Filter Category/Keywords
             let filtered = products.filter(p => {
                 const combinedText = (p.name + " " + p.desc + " " + (p.specs?.Aromă || "")).toLowerCase();
                 
-                // Helper to check specific category
                 const matchesCategory = (cat) => {
                     if (cat === 'floral') return combinedText.includes('flor') || combinedText.includes('trandafir') || combinedText.includes('magnolie');
                     if (cat === 'vanilla') return combinedText.includes('vanilie');
@@ -795,14 +998,10 @@
                     return false;
                 };
 
-                // If no categories selected, return true (show all). 
-                // If categories are selected, return true if product matches AT LEAST ONE of them.
                 if (selectedCategories.length === 0) return true;
-                
                 return selectedCategories.some(cat => matchesCategory(cat));
             });
 
-            // 2. Filter Price Range
             filtered = filtered.filter(p => {
                 if (priceVal === 'under-10') return p.price < 10;
                 if (priceVal === '10-20') return p.price >= 10 && p.price <= 20;
@@ -810,7 +1009,6 @@
                 return true;
             });
 
-            // 3. Sort
             if (sortVal === 'price-asc') {
                 filtered.sort((a, b) => a.price - b.price);
             } else if (sortVal === 'price-desc') {
@@ -821,7 +1019,6 @@
 
             renderGrid(filtered);
             
-            // Close menu on mobile after applying
             document.getElementById('filter-dropdown').classList.remove('show');
             document.querySelector('.filter-toggle-btn').classList.remove('active');
         }
@@ -851,17 +1048,11 @@
             `;
         }
 
-        // --- VIEW SWITCHER LOGIC ---
         function changeView(mode) {
             const grid = document.getElementById('full-grid');
-            
-            // Remove existing modes
             grid.classList.remove('mode-1', 'mode-2', 'mode-list');
-            
-            // Add new mode
             if (mode) grid.classList.add(mode);
 
-            // Update buttons state
             document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
             const btns = document.querySelectorAll('.view-btn');
             if(mode === 'mode-1') btns[0].classList.add('active');
@@ -990,9 +1181,7 @@
 
         window.onload = init;
         
-        // Close filter when clicking outside
         window.onclick = function(event) {
-            // Updated to ensure we don't close when clicking inside the new aroma list
             if (!event.target.closest('.filter-wrapper')) {
                 document.getElementById('filter-dropdown').classList.remove('show');
                 const btn = document.querySelector('.filter-toggle-btn');
