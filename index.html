@@ -12,6 +12,7 @@
             --warm-sand: #DBCBB0;
             --charcoal: #1A1A1A;
             --gold: #C5A059;
+            --alert-bg: #2c2c2c; /* Slightly lighter charcoal for banner */
             --transition-smooth: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
@@ -28,6 +29,32 @@
 
         h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 500; }
 
+        /* --- INFO BANNER STYLES --- */
+        .info-banner {
+            width: 100%;
+            background-color: var(--alert-bg);
+            color: var(--ivory);
+            text-align: center;
+            padding: 12px 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--gold);
+            line-height: 1.4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Sticky class for the products page */
+        .sticky-banner {
+            position: sticky;
+            top: 80px; /* Matches Nav Height */
+            z-index: 1500; /* Below Nav overlay but above content */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        /* Nav Styles */
         nav {
             position: fixed;
             top: 0;
@@ -119,7 +146,8 @@
         }
 
         .hero {
-            height: 100vh;
+            height: calc(100vh - 80px); /* Adjust for banner spacing if needed */
+            min-height: 500px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -683,6 +711,10 @@
     </div>
 
     <div id="main-site" class="active-page">
+        <div class="info-banner" style="margin-top: 80px;">
+            PRETUL PRODUSELOR ESTE UNUL ORIENTATIV. INCA NU ESTE STABILIT.
+        </div>
+
         <section class="hero">
             <h1>Artă și Lumină</h1>
             <button class="btn-primary" onclick="switchPage('all-products-view')" style="background:transparent; border: 1px solid white;">Vezi Colecția</button>
@@ -728,6 +760,10 @@
     </div>
 
     <div id="all-products-view">
+        <div class="info-banner sticky-banner">
+            PRETUL PRODUSELOR ESTE UNUL ORIENTATIV. INCA NU ESTE STABILIT.
+        </div>
+
         <div class="section-padding">
             <p onclick="switchPage('main-site')" style="cursor:pointer; margin-bottom: 20px; font-size: 0.8rem;">← ÎNAPOI</p>
             <h2 style="margin-bottom: 20px; text-transform: uppercase; text-align: center;">Întreaga Colecție</h2>
